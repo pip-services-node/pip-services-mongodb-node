@@ -47,7 +47,7 @@ class MongoDbPersistence {
     convertFromPublic(value) {
         return value;
     }
-    isOpened() {
+    isOpen() {
         return this._connection.readyState == 1;
     }
     composeSettings() {

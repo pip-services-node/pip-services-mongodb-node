@@ -22,7 +22,7 @@ export declare class MongoDbPersistence implements IReferenceable, IConfigurable
     configure(config: ConfigParams): void;
     protected convertToPublic(value: any): any;
     protected convertFromPublic(value: any): any;
-    isOpened(): boolean;
+    isOpen(): boolean;
     private composeSettings;
     open(correlationId: string, callback?: (err: any) => void): void;
     close(correlationId: string, callback?: (err: any) => void): void;

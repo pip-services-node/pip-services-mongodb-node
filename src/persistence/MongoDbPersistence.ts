@@ -82,7 +82,7 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         return value;
     }    
 
-    public isOpened(): boolean {
+    public isOpen(): boolean {
         return this._connection.readyState == 1;
     }
 
