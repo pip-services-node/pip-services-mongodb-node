@@ -1,3 +1,5 @@
+/** @module connect */
+/** @hidden */
 let async = require('async');
 
 import { IReferenceable } from 'pip-services-commons-node';

@@ -1,4 +1,7 @@
+/** @module persistence */
+/** @hidden */
 let _ = require('lodash');
+/** @hidden */
 let async = require('async');
 
 import { Schema } from "mongoose";

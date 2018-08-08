@@ -54,7 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="mongodbconnectionresolver.html">MongoDbConnectionResolver</a>
+					<a href="../modules/connect.html">connect</a>
+				</li>
+				<li>
+					<a href="connect.mongodbconnectionresolver.html">MongoDbConnectionResolver</a>
 				</li>
 			</ul>
 			<h1>Class MongoDbConnectionResolver</h1>
@@ -86,19 +89,16 @@
 						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="mongodbconnectionresolver.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="mongodbconnectionresolver.html#_credentialresolver" class="tsd-kind-icon">_credential<wbr>Resolver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="connect.mongodbconnectionresolver.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="connect.mongodbconnectionresolver.html#_credentialresolver" class="tsd-kind-icon">_credential<wbr>Resolver</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="mongodbconnectionresolver.html#composeuri" class="tsd-kind-icon">compose<wbr>Uri</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mongodbconnectionresolver.html#configure" class="tsd-kind-icon">configure</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mongodbconnectionresolver.html#resolve" class="tsd-kind-icon">resolve</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="mongodbconnectionresolver.html#setreferences" class="tsd-kind-icon">set<wbr>References</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="mongodbconnectionresolver.html#validateconnection" class="tsd-kind-icon">validate<wbr>Connection</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="mongodbconnectionresolver.html#validateconnections" class="tsd-kind-icon">validate<wbr>Connections</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="connect.mongodbconnectionresolver.html#configure" class="tsd-kind-icon">configure</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="connect.mongodbconnectionresolver.html#resolve" class="tsd-kind-icon">resolve</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="connect.mongodbconnectionresolver.html#setreferences" class="tsd-kind-icon">set<wbr>References</a></li>
 							</ul>
 						</section>
 					</div>
@@ -112,7 +112,7 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConnectionResolver</span><span class="tsd-signature-symbol"> =&nbsp;new ConnectionResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L14">connect/MongoDbConnectionResolver.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/f0c6832/src/connect/MongoDbConnectionResolver.ts#L16">connect/MongoDbConnectionResolver.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -122,39 +122,13 @@
 					<div class="tsd-signature tsd-kind-icon">_credential<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CredentialResolver</span><span class="tsd-signature-symbol"> =&nbsp;new CredentialResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L15">connect/MongoDbConnectionResolver.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/f0c6832/src/connect/MongoDbConnectionResolver.ts#L17">connect/MongoDbConnectionResolver.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="composeuri" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> compose<wbr>Uri</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">compose<wbr>Uri<span class="tsd-signature-symbol">(</span>connections<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span>, credential<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CredentialParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L58">connect/MongoDbConnectionResolver.ts:58</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>connections: <span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-								<li>
-									<h5>credential: <span class="tsd-signature-type">CredentialParams</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="configure" class="tsd-anchor"></a>
 					<h3>configure</h3>
@@ -165,7 +139,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L22">connect/MongoDbConnectionResolver.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/f0c6832/src/connect/MongoDbConnectionResolver.ts#L24">connect/MongoDbConnectionResolver.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,7 +162,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L125">connect/MongoDbConnectionResolver.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/f0c6832/src/connect/MongoDbConnectionResolver.ts#L127">connect/MongoDbConnectionResolver.ts:127</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L17">connect/MongoDbConnectionResolver.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/f0c6832/src/connect/MongoDbConnectionResolver.ts#L19">connect/MongoDbConnectionResolver.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -248,58 +222,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="validateconnection" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> validate<wbr>Connection</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">validate<wbr>Connection<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, connection<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L27">connect/MongoDbConnectionResolver.ts:27</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>connection: <span class="tsd-signature-type">ConnectionParams</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="validateconnections" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> validate<wbr>Connections</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">validate<wbr>Connections<span class="tsd-signature-symbol">(</span>correlationId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, connections<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/abea94c/src/connect/MongoDbConnectionResolver.ts#L46">connect/MongoDbConnectionResolver.ts:46</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>connections: <span class="tsd-signature-type">ConnectionParams</span><span class="tsd-signature-symbol">[]</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -308,55 +230,43 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/connect.html">connect</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/index.html">index</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/persistence.html">persistence</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="identifiablemongodbpersistence.html" class="tsd-kind-icon">Identifiable<wbr>Mongo<wbr>DbPersistence</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="mongodbconnectionresolver.html" class="tsd-kind-icon">Mongo<wbr>DbConnection<wbr>Resolver</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="connect.mongodbconnectionresolver.html" class="tsd-kind-icon">Mongo<wbr>DbConnection<wbr>Resolver</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="mongodbconnectionresolver.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a>
+								<a href="connect.mongodbconnectionresolver.html#_connectionresolver" class="tsd-kind-icon">_connection<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="mongodbconnectionresolver.html#_credentialresolver" class="tsd-kind-icon">_credential<wbr>Resolver</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="mongodbconnectionresolver.html#composeuri" class="tsd-kind-icon">compose<wbr>Uri</a>
+								<a href="connect.mongodbconnectionresolver.html#_credentialresolver" class="tsd-kind-icon">_credential<wbr>Resolver</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="mongodbconnectionresolver.html#configure" class="tsd-kind-icon">configure</a>
+								<a href="connect.mongodbconnectionresolver.html#configure" class="tsd-kind-icon">configure</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="mongodbconnectionresolver.html#resolve" class="tsd-kind-icon">resolve</a>
+								<a href="connect.mongodbconnectionresolver.html#resolve" class="tsd-kind-icon">resolve</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="mongodbconnectionresolver.html#setreferences" class="tsd-kind-icon">set<wbr>References</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="mongodbconnectionresolver.html#validateconnection" class="tsd-kind-icon">validate<wbr>Connection</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="mongodbconnectionresolver.html#validateconnections" class="tsd-kind-icon">validate<wbr>Connections</a>
+								<a href="connect.mongodbconnectionresolver.html#setreferences" class="tsd-kind-icon">set<wbr>References</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="mongodbpersistence.html" class="tsd-kind-icon">Mongo<wbr>DbPersistence</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#_" class="tsd-kind-icon">_</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#async" class="tsd-kind-icon">async</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
