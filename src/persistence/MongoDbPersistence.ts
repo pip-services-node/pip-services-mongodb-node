@@ -13,6 +13,24 @@ import { createConnection } from "mongoose";
 
 import { MongoDbConnectionResolver } from '../connect/MongoDbConnectionResolver';
 
+/**
+ * Class that provides methods for working with MongoDB servers.
+ * 
+ * MongoDbPersistences can be configured using the [[configure]] method, which searches for 
+ * and sets:
+ * - the connection resolver's connections and credentials ("connection(s)" and "credential(s)" 
+ * sections);
+ * - the MongoDB collection to work with ("collection" parameter);
+ * - this persistence's options ("options" section):
+ *     - "max_pool_size" (default is 2);
+ *     - "keep_alive" (default is 1);
+ *     - "connect_timeout" (default is 5000);
+ *     - "auto_reconnect" (default is <code>true</code>);
+ *     - "max_page_size" (default is 100);
+ *     - "debug" (default is <code>false</code>).
+ * 
+ * @see [[MongoDbConnectionResolver]]
+ */
 export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpenable, ICleanable {
 
     private _defaultConfig: ConfigParams = ConfigParams.fromTuples(
@@ -30,16 +48,42 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         "options.replica_set", false
     );
 
+    /** 
+     * Allows this class to log information.
+     * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] (in the PipServices "Components" package)
+     */
     protected _logger: CompositeLogger = new CompositeLogger();
+    /**
+     * Resolves MongoDB server URIs and the credentials to use.
+     * @see [[MongoDbConnectionResolver]]
+     */
     protected _connectionResolver: MongoDbConnectionResolver = new MongoDbConnectionResolver();
+    /**
+     * This persistence's options. Set during [[configure configuration]].
+     */
     protected _options: ConfigParams = new ConfigParams();
 
+    /** Stores the opened MongoDB server connection(s). Used to work with models. */
     protected _connection: any;
+    /** The Mongo database's name. */
     protected _database: string;
+    /** The MongoDB collection to work with. */
     protected _collection: string;
+    /** The connection's model. Chosen using this object's collection and schema. */
     protected _model: any;
+    /** The schema to use for document verification. */
     protected _schema: Schema;
 
+    /**
+     * Creates a new MongoDbPersistence object. If a collection name and 
+     * schema are given, then the MongoDbPersistence will be configured 
+     * to work with the given collection and validate documents using the
+     * given schema. If these parameters are omitted - they can be configured 
+     * later on using the [[configure]] method. 
+     * 
+     * @param collection    the name of the collection to work with.
+     * @param schema        the schema to use for document verification.
+     */
     public constructor(collection?: string, schema?: Schema) {
         this._connection = createConnection();
         this._collection = collection;
@@ -51,11 +95,36 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         }
     }
 
+    /**
+     * Sets references for this MongoDbPersistence's logger and its connection resolver.
+     * 
+     * @param references    an IReferences object, containing the references that are to be set for 
+     *                      this object's logger and connection resolver.
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]]
+     */
     public setReferences(references: IReferences): void {
         this._logger.setReferences(references);
         this._connectionResolver.setReferences(references);
     }
 
+    /**
+     * Configures this MongoDbPersistence by searching for and setting:
+     * - the connection resolver's connections and credentials ("connection(s)" and "credential(s)" 
+     * sections);
+     * - the MongoDB collection to work with ("collection" parameter);
+     * - this persistence's options ("options" section):
+     *     - "max_pool_size" (default is 2);
+     *     - "keep_alive" (default is 1);
+     *     - "connect_timeout" (default is 5000);
+     *     - "auto_reconnect" (default is <code>true</code>);
+     *     - "max_page_size" (default is 100);
+     *     - "debug" (default is <code>false</code>).
+     * 
+     * @param config    the configuration parameters to configure this MongoDbPersistence with.
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]]
+     */
     public configure(config: ConfigParams): void {
         config = config.setDefaults(this._defaultConfig);
 
@@ -71,18 +140,33 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         this._options = this._options.override(config.getSection("options"));
     }
 
-    // Convert object to JSON format
+    /** 
+     * Converts the given object to the public format (JSON). 
+     * 
+     * @param value     the object to convert to the public format.
+     * @returns the object's public version.
+     */
     protected convertToPublic(value: any): any {
         if (value && value.toJSON)
             value = value.toJSON();
         return value;
     }    
 
-    // Convert object from public format
+    /** 
+     * Convert the given object from the public format (JSON) to its 
+     * initial format. 
+     * 
+     * @param value     the object to convert from the public format.
+     * @returns the initial object.
+     */
     protected convertFromPublic(value: any): any {
         return value;
     }    
 
+    /**
+     * @returns whether or not this persistence is currently open and connected to a 
+     *          MongoDB server.
+     */
     public isOpen(): boolean {
         return this._connection.readyState == 1;
     }
@@ -111,6 +195,13 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         return settings;
     }
 
+    /**
+     * Opens this MongoDB persistence by resolving and establishing a connection to the MongoDB server.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          (optional) the function to call once a connection to the MongoDB server 
+     *                          has been established. Will be called with an error if one is raised.
+     */
     public open(correlationId: string, callback?: (err: any) => void): void {
         this._connectionResolver.resolve(correlationId, (err, uri) => {
             if (err) {
@@ -146,6 +237,13 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         });
     }
 
+    /**
+     * Closes this MongoDB persistence disconnecting from the MongoDB server.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          (optional) the function to call once disconnected from the MongoDB server. 
+     *                          Will be called with an error if one is raised.
+     */
     public close(correlationId: string, callback?: (err: any) => void): void {
         this._connection.close((err) => {
             if (err)
@@ -157,6 +255,13 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
         });
     }
 
+    /**
+     * Clears the collection that this MongoDB persistence is connected to.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          (optional) the function to call once the collection has been cleared.
+     *                          Will be called with an error if one is raised.
+     */
     public clear(correlationId: string, callback?: (err: any) => void): void {
         // Return error if collection is not set
         if (this._collection == null) {

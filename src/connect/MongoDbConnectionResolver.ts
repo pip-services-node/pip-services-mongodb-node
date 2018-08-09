@@ -12,15 +12,51 @@ import { CredentialResolver } from 'pip-services-components-node';
 import { ConnectionParams } from 'pip-services-components-node';
 import { CredentialParams } from 'pip-services-components-node';
 
+/**
+ * Helper class that resolves MongoDB server URIs, along with the authentication parameters to use for the connection.
+ * 
+ * MongoDbConnectionResolvers can be configured using the [[configure]] method, which searches for 
+ * and sets:
+ * - the connection resolver's connections ("connection(s)" section);
+ * - the credential resolver's credentials ("credential(s)" section).
+ * 
+ * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/connect.connectionresolver.html ConnectionResolver]] (in the PipServices "Components" package)
+ * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/auth.credentialresolver.html CredentialResolver]] (in the PipServices "Components" package)
+ */
 export class MongoDbConnectionResolver implements IReferenceable, IConfigurable {
+    /** 
+     * The [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/connect.connectionresolver.html ConnectionResolver]] 
+     * to use for resolving connection parameters.
+     */
     protected _connectionResolver: ConnectionResolver = new ConnectionResolver();
+    /** 
+     * The [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/auth.credentialresolver.html CredentialResolver]] 
+     * to use for resolving credential parameters.
+     */
     protected _credentialResolver: CredentialResolver = new CredentialResolver();
 
+    /**
+     * Sets references for this MongoDbConnectionResolver's connection and credential resolvers.
+     * 
+     * @param references    an IReferences object, containing the references that are to be set for 
+     *                      this object's connection and credential resolvers.
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]]
+     */
     public setReferences(references: IReferences): void {
         this._connectionResolver.setReferences(references);
         this._credentialResolver.setReferences(references);
     }
-
+    
+    /**
+     * Configures this MongoDbConnectionResolver by searching for and setting:
+     * - the connection resolver's connections ("connection(s)" section);
+     * - the credential resolver's credentials ("credential(s)" section).
+     * 
+     * @param config    the configuration parameters to configure this MongoDbConnectionResolver with.
+     * 
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]]
+     */
     public configure(config: ConfigParams): void {
         this._connectionResolver.configure(config);
         this._credentialResolver.configure(config);
@@ -124,6 +160,14 @@ export class MongoDbConnectionResolver implements IReferenceable, IConfigurable 
         return uri;
     }
 
+    /**
+     * Resolves the MongoDB server's uri, along with the credentials to use for the connection, 
+     * using this object's connection and credential resolvers.
+     * 
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          the function to call with the resolved uri 
+     *                          (or with an error, if one is raised).
+     */
     public resolve(correlationId: string, callback: (err: any, uri: string) => void): void {
         let connections: ConnectionParams[];
         let credential: CredentialParams;
