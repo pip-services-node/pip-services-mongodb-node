@@ -25,18 +25,87 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  * [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]]
  * by their keys of type K.
  * 
+ * ### Configuration parameters ###
+ * 
  * IdentifiableMongoDbPersistences can be configured using the [[configure]] method, which searches for 
- * and sets:
- * - the connection resolver's connections and credentials ("connection(s)" and "credential(s)" 
- * sections);
- * - the MongoDB collection to work with ("collection" parameter);
- * - this persistence's options ("options" section):
- *     - "max_pool_size" (default is 2);
- *     - "keep_alive" (default is 1);
- *     - "connect_timeout" (default is 5000);
- *     - "auto_reconnect" (default is <code>true</code>);
- *     - "max_page_size" (default is 100);
- *     - "debug" (default is <code>false</code>).
+ * and sets the parameters listed below:
+ * 
+ * - __connection(s)__
+ *     - "connection.uri" - the mongo Uri,
+ *     - "connection.host" - the mongo Host,
+ *     - "connection.port" - the mongo Port,
+ *     - "connection.database" - the mongo Database
+ * - __credential(s)__
+ *     - "credential.name" - the username to use for authentication,
+ *     - "credential.pass" - the password,
+ * - __options__
+ *     - "options.max_pool_size" (default is 2);
+ *     - "options.keep_alive" (default is 1);
+ *     - "options.connect_timeout" (default is 5000);
+ *     - "options.auto_reconnect" (default is <code>true</code>);
+ *     - "options.max_page_size" (default is 100);
+ *     - "options.debug" (default is <code>false</code>).
+ * 
+ * - "collection" - the MongoDB collection to work with 
+ * 
+ * ### References ###
+ * 
+ * A logger and a connection resolver can be referenced by passing the following references
+ * to the object's [[setReferences]] method:
+ * 
+ * - logger: <code>"\*:logger:\*:\*:1.0"</code>
+ * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
+ * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the connection resolver's credential resolver) 
+ * 
+ * ### Examples ###
+ * Example IdentifiableMongoDbPersistence implementation:
+ * 
+ *     export class MyDataMongoDbPersistence
+ *       extends IdentifiableMongoDbPersistence<MyDataV1, string> {
+ * 
+ *       constructor() {
+ *           super('mydata', MyDataMongoDbSchema());
+ *           this._maxPageSize = 1000;
+ *       }
+ * 
+ *       private composeFilter(filter: FilterParams): any {
+ *           filter = filter || new FilterParams();
+ *           let criteria = [];
+ *           let udi = filter.getAsNullableString('udi');
+ *           if (udi != null) {
+ *               criteria.push({ udi: udi });
+ *           }
+ *           let udis = filter.getAsObject('udis');
+ *           if (_.isString(udis))
+ *               udis = udis.split(',');
+ *           if (_.isArray(udis))
+ *               criteria.push({ udi: { $in: udis } });
+ *           return criteria.length > 0 ? { $and: criteria } : null;
+ *       }
+ * 
+ *       public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+ *           callback: (err: any, page: DataPage<MyDataV1>) => void): void {
+ *           super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *       }
+ *       
+ *       public getOneByUdi(correlationId: string, udi: string,
+ *           callback: (err: any, item: MyDataV1) => void): void {
+ *           let criteria = {
+ *               udi: udi
+ *           };
+ *           this._model.findOne(criteria, (err, item) => {
+ *               item = this.convertFromPublic(item);
+ *               if (item != null) this._logger.trace(correlationId, "Found my data by %s", udi);
+ *               else this._logger.trace(correlationId, "Cannot find my data by %s", udi);
+ *               callback(err, item);
+ *           });
+ *       }
+ * 
+ *       //other methods that are specific to working with MyDataV1 objects.
+ * 
+ *     }
+ * 
+ * 
  * 
  * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
  */

@@ -29,6 +29,10 @@ import { MongoDbConnectionResolver } from '../connect/MongoDbConnectionResolver'
  *     - "max_page_size" (default is 100);
  *     - "debug" (default is <code>false</code>).
  * 
+ * A logger and a connection resolver can be referenced by passing the corresponding "logger", 
+ * "discovery" (for the connection resolver), and "credential-store" (for the connection resolver's 
+ * credential resolver) references to the object's [[setReferences]] method.
+ * 
  * @see [[MongoDbConnectionResolver]]
  */
 export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpenable, ICleanable {
