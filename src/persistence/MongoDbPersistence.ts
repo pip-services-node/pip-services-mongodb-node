@@ -96,7 +96,7 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
     }
 
     /**
-     * Sets references for this MongoDbPersistence's logger and its connection resolver.
+     * Sets references to this MongoDbPersistence's logger and its connection resolver.
      * 
      * @param references    an IReferences object, containing the references that are to be set for 
      *                      this object's logger and connection resolver.

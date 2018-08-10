@@ -36,7 +36,7 @@ export class MongoDbConnectionResolver implements IReferenceable, IConfigurable 
     protected _credentialResolver: CredentialResolver = new CredentialResolver();
 
     /**
-     * Sets references for this MongoDbConnectionResolver's connection and credential resolvers.
+     * Sets references to this MongoDbConnectionResolver's connection and credential resolvers.
      * 
      * @param references    an IReferences object, containing the references that are to be set for 
      *                      this object's connection and credential resolvers.
