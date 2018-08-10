@@ -78,6 +78,8 @@
 						<li>the connection resolver&#39;s connections (&quot;connection(s)&quot; section);</li>
 						<li>the credential resolver&#39;s credentials (&quot;credential(s)&quot; section).</li>
 					</ul>
+					<p>References to connection and credential resolvers can be set by passing &quot;discovery&quot; service and
+					&quot;credential-store&quot; references to the <a href="connect.mongodbconnectionresolver.html#setreferences">setReferences</a> method.</p>
 					<dl class="tsd-comment-tags">
 						<dt>see</dt>
 						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/connect.connectionresolver.html" class="external">ConnectionResolver</a> (in the PipServices &quot;Components&quot; package)</p>
@@ -133,7 +135,7 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConnectionResolver</span><span class="tsd-signature-symbol"> =&nbsp;new ConnectionResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/60aa10d/src/connect/MongoDbConnectionResolver.ts#L31">connect/MongoDbConnectionResolver.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/71ec9a6/src/connect/MongoDbConnectionResolver.ts#L34">connect/MongoDbConnectionResolver.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,7 +151,7 @@
 					<div class="tsd-signature tsd-kind-icon">_credential<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CredentialResolver</span><span class="tsd-signature-symbol"> =&nbsp;new CredentialResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/60aa10d/src/connect/MongoDbConnectionResolver.ts#L36">connect/MongoDbConnectionResolver.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/71ec9a6/src/connect/MongoDbConnectionResolver.ts#L39">connect/MongoDbConnectionResolver.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,7 +174,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/60aa10d/src/connect/MongoDbConnectionResolver.ts#L60">connect/MongoDbConnectionResolver.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/71ec9a6/src/connect/MongoDbConnectionResolver.ts#L64">connect/MongoDbConnectionResolver.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -185,7 +187,7 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a></p>
+									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; package)</p>
 									</dd>
 								</dl>
 							</div>
@@ -212,13 +214,13 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/60aa10d/src/connect/MongoDbConnectionResolver.ts#L171">connect/MongoDbConnectionResolver.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/71ec9a6/src/connect/MongoDbConnectionResolver.ts#L175">connect/MongoDbConnectionResolver.ts:175</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Resolves the MongoDB server&#39;s uri, along with the credentials to use for the connection,
-									using this object&#39;s connection and credential resolvers.</p>
+									using the referenced connection and credential resolvers.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -272,7 +274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/60aa10d/src/connect/MongoDbConnectionResolver.ts#L46">connect/MongoDbConnectionResolver.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/71ec9a6/src/connect/MongoDbConnectionResolver.ts#L50">connect/MongoDbConnectionResolver.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -281,7 +283,7 @@
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html" class="external">IReferences</a></p>
+									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html" class="external">IReferences</a> (in the PipServices &quot;Commons&quot; package)</p>
 									</dd>
 								</dl>
 							</div>
@@ -290,8 +292,9 @@
 								<li>
 									<h5>references: <span class="tsd-signature-type">IReferences</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>an IReferences object, containing the references that are to be set for
-										this object&#39;s connection and credential resolvers.</p>
+										<p>an IReferences object, containing references to a &quot;discovery&quot; service
+											(for the connection resolver) and a &quot;credential-store&quot; (for the credential
+										resolver).</p>
 									</div>
 								</li>
 							</ul>

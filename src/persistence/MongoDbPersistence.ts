@@ -49,12 +49,13 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
     );
 
     /** 
-     * Allows this class to log information.
+     * The logger that is referenced by this object.
      * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] (in the PipServices "Components" package)
      */
     protected _logger: CompositeLogger = new CompositeLogger();
     /**
-     * Resolves MongoDB server URIs and the credentials to use.
+     * The connection resolver that is referenced by this object. 
+     * Resolves MongoDB server URIs and the credentials that are to be used.
      * @see [[MongoDbConnectionResolver]]
      */
     protected _connectionResolver: MongoDbConnectionResolver = new MongoDbConnectionResolver();
@@ -98,10 +99,11 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
     /**
      * Sets references to this MongoDbPersistence's logger and its connection resolver.
      * 
-     * @param references    an IReferences object, containing the references that are to be set for 
-     *                      this object's logger and connection resolver.
+     * @param references    an IReferences object, containing references to a "logger", a "discovery" service 
+     *                      (for the connection resolver), and a "credential-store" (for the connection resolver's 
+     *                      credential resolver).
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]]
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
      */
     public setReferences(references: IReferences): void {
         this._logger.setReferences(references);
@@ -123,7 +125,7 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
      * 
      * @param config    the configuration parameters to configure this MongoDbPersistence with.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]]
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     public configure(config: ConfigParams): void {
         config = config.setDefaults(this._defaultConfig);
