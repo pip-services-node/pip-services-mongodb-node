@@ -18,20 +18,31 @@ import { MongoDbConnectionResolver } from '../connect/MongoDbConnectionResolver'
  * 
  * MongoDbPersistences can be configured using the [[configure]] method, which searches for 
  * and sets:
- * - the connection resolver's connections and credentials ("connection(s)" and "credential(s)" 
- * sections);
- * - the MongoDB collection to work with ("collection" parameter);
- * - this persistence's options ("options" section):
- *     - "max_pool_size" (default is 2);
- *     - "keep_alive" (default is 1);
- *     - "connect_timeout" (default is 5000);
- *     - "auto_reconnect" (default is <code>true</code>);
- *     - "max_page_size" (default is 100);
- *     - "debug" (default is <code>false</code>).
  * 
- * A logger and a connection resolver can be referenced by passing the corresponding "logger", 
- * "discovery" (for the connection resolver), and "credential-store" (for the connection resolver's 
- * credential resolver) references to the object's [[setReferences]] method.
+ * ### Configuration parameters ###
+ * 
+ * Parameters to pass to the [[configure]] method for component configuration:
+ * 
+ * - "connection(s).<...>" - the connection resolver's connections;
+ * - "credential(s).<...>" - the credentials resolver's credentials;
+ * - "collection" - the MongoDB collection to work with;
+ * _options_
+ * - "options.max_pool_size" (default is 2);
+ * - "options.keep_alive" (default is 1);
+ * - "options.connect_timeout" (default is 5000);
+ * - "options.auto_reconnect" (default is <code>true</code>);
+ * - "options.max_page_size" (default is 100);
+ * - "options.debug" (default is <code>false</code>).
+ * 
+ * 
+ * ### References ###
+ * 
+ * A logger and a connection resolver can be referenced by passing the following references
+ * to the object's [[setReferences]] method:
+ * 
+ * - logger: <code>"\*:logger:\*:\*:1.0"</code>
+ * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
+ * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the connection resolver's credential resolver) 
  * 
  * @see [[MongoDbConnectionResolver]]
  */
@@ -115,17 +126,19 @@ export class MongoDbPersistence implements IReferenceable, IConfigurable, IOpena
     }
 
     /**
-     * Configures this MongoDbPersistence by searching for and setting:
-     * - the connection resolver's connections and credentials ("connection(s)" and "credential(s)" 
-     * sections);
-     * - the MongoDB collection to work with ("collection" parameter);
-     * - this persistence's options ("options" section):
-     *     - "max_pool_size" (default is 2);
-     *     - "keep_alive" (default is 1);
-     *     - "connect_timeout" (default is 5000);
-     *     - "auto_reconnect" (default is <code>true</code>);
-     *     - "max_page_size" (default is 100);
-     *     - "debug" (default is <code>false</code>).
+     * Configures this MongoDbPersistence using the given configuration parameters.
+     * 
+     * __Configuration parameters:__
+     * - "connection(s).<...>" - the connection resolver's connections;
+     * - "credential(s).<...>" - the credentials resolver's credentials;
+     * - "collection" - the MongoDB collection to work with;
+     * _options_
+     * - "options.max_pool_size" (default is 2);
+     * - "options.keep_alive" (default is 1);
+     * - "options.connect_timeout" (default is 5000);
+     * - "options.auto_reconnect" (default is <code>true</code>);
+     * - "options.max_page_size" (default is 100);
+     * - "options.debug" (default is <code>false</code>).
      * 
      * @param config    the configuration parameters to configure this MongoDbPersistence with.
      * 

@@ -27,17 +27,19 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  * 
  * ### Configuration parameters ###
  * 
- * IdentifiableMongoDbPersistences can be configured using the [[configure]] method, which searches for 
- * and sets the parameters listed below:
+ * Parameters to pass to the [[configure]] method for component configuration:
  * 
  * - __connection(s)__
- *     - "connection.uri" - the mongo Uri,
- *     - "connection.host" - the mongo Host,
- *     - "connection.port" - the mongo Port,
- *     - "connection.database" - the mongo Database
+ *     - "connection.uri" - the mongo Uri;
+ *     - "connection.host" - the mongo Host;
+ *     - "connection.port" - the mongo Port;
+ *     - "connection.database" - the mongo Database;
  * - __credential(s)__
- *     - "credential.name" - the username to use for authentication,
- *     - "credential.pass" - the password,
+ *     - "credential.name" - the username to use for authentication;
+ *     - "credential.pass" - the password;
+ *     - "credential.store_key" - the key to use in the credential store;
+ *     - "credential.access_id" - the access ID to use;
+ *     - "credential.access_key" - the access key to use;
  * - __options__
  *     - "options.max_pool_size" (default is 2);
  *     - "options.keep_alive" (default is 1);

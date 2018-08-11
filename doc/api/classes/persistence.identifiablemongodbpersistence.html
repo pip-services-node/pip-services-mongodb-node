@@ -75,19 +75,21 @@
 						by their keys of type K.</p>
 					</div>
 					<h3 id="configuration-parameters">Configuration parameters</h3>
-					<p>IdentifiableMongoDbPersistences can be configured using the <a href="persistence.identifiablemongodbpersistence.html#configure">configure</a> method, which searches for
-					and sets the parameters listed below:</p>
+					<p>Parameters to pass to the <a href="persistence.identifiablemongodbpersistence.html#configure">configure</a> method for component configuration:</p>
 					<ul>
 						<li><strong>connection(s)</strong><ul>
-								<li>&quot;connection.uri&quot; - the mongo Uri,</li>
-								<li>&quot;connection.host&quot; - the mongo Host,</li>
-								<li>&quot;connection.port&quot; - the mongo Port,</li>
-								<li>&quot;connection.database&quot; - the mongo Database</li>
+								<li>&quot;connection.uri&quot; - the mongo Uri;</li>
+								<li>&quot;connection.host&quot; - the mongo Host;</li>
+								<li>&quot;connection.port&quot; - the mongo Port;</li>
+								<li>&quot;connection.database&quot; - the mongo Database;</li>
 							</ul>
 						</li>
 						<li><strong>credential(s)</strong><ul>
-								<li>&quot;credential.name&quot; - the username to use for authentication,</li>
-								<li>&quot;credential.pass&quot; - the password,</li>
+								<li>&quot;credential.name&quot; - the username to use for authentication;</li>
+								<li>&quot;credential.pass&quot; - the password;</li>
+								<li>&quot;credential.store_key&quot; - the key to use in the credential store;</li>
+								<li>&quot;credential.access_id&quot; - the access ID to use;</li>
+								<li>&quot;credential.access_key&quot; - the access key to use;</li>
 							</ul>
 						</li>
 						<li><p><strong>options</strong></p>
@@ -267,7 +269,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L115">persistence/IdentifiableMongoDbPersistence.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L117">persistence/IdentifiableMongoDbPersistence.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,7 +316,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_collection">_collection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L76">persistence/MongoDbPersistence.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L87">persistence/MongoDbPersistence.ts:87</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -330,7 +332,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_connection">_connection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L72">persistence/MongoDbPersistence.ts:72</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L83">persistence/MongoDbPersistence.ts:83</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -346,7 +348,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_connectionresolver">_connectionResolver</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L65">persistence/MongoDbPersistence.ts:65</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L76">persistence/MongoDbPersistence.ts:76</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -368,7 +370,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_database">_database</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L74">persistence/MongoDbPersistence.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L85">persistence/MongoDbPersistence.ts:85</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -384,7 +386,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_logger">_logger</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L59">persistence/MongoDbPersistence.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L70">persistence/MongoDbPersistence.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -404,7 +406,7 @@
 					<div class="tsd-signature tsd-kind-icon">_max<wbr>Page<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;100</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L115">persistence/IdentifiableMongoDbPersistence.ts:115</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L117">persistence/IdentifiableMongoDbPersistence.ts:117</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -415,7 +417,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_model">_model</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L78">persistence/MongoDbPersistence.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L89">persistence/MongoDbPersistence.ts:89</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -431,7 +433,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_options">_options</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L69">persistence/MongoDbPersistence.ts:69</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L80">persistence/MongoDbPersistence.ts:80</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -447,7 +449,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_schema">_schema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L80">persistence/MongoDbPersistence.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L91">persistence/MongoDbPersistence.ts:91</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -470,7 +472,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L271">persistence/MongoDbPersistence.ts:271</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L284">persistence/MongoDbPersistence.ts:284</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -527,7 +529,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L253">persistence/MongoDbPersistence.ts:253</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L266">persistence/MongoDbPersistence.ts:266</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -584,7 +586,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L153">persistence/IdentifiableMongoDbPersistence.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L155">persistence/IdentifiableMongoDbPersistence.ts:155</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -635,7 +637,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#convertfrompublic">convertFromPublic</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L168">persistence/MongoDbPersistence.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L181">persistence/MongoDbPersistence.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -668,7 +670,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L165">persistence/IdentifiableMongoDbPersistence.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L167">persistence/IdentifiableMongoDbPersistence.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -701,7 +703,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#converttopublic">convertToPublic</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L155">persistence/MongoDbPersistence.ts:155</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L168">persistence/MongoDbPersistence.ts:168</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -733,7 +735,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L340">persistence/IdentifiableMongoDbPersistence.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L342">persistence/IdentifiableMongoDbPersistence.ts:342</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -803,7 +805,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L498">persistence/IdentifiableMongoDbPersistence.ts:498</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L500">persistence/IdentifiableMongoDbPersistence.ts:500</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -865,7 +867,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L478">persistence/IdentifiableMongoDbPersistence.ts:478</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L480">persistence/IdentifiableMongoDbPersistence.ts:480</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -930,7 +932,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L515">persistence/IdentifiableMongoDbPersistence.ts:515</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L517">persistence/IdentifiableMongoDbPersistence.ts:517</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -992,7 +994,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L243">persistence/IdentifiableMongoDbPersistence.ts:243</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L245">persistence/IdentifiableMongoDbPersistence.ts:245</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1069,7 +1071,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L274">persistence/IdentifiableMongoDbPersistence.ts:274</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L276">persistence/IdentifiableMongoDbPersistence.ts:276</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1134,7 +1136,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L290">persistence/IdentifiableMongoDbPersistence.ts:290</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L292">persistence/IdentifiableMongoDbPersistence.ts:292</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1199,7 +1201,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L309">persistence/IdentifiableMongoDbPersistence.ts:309</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L311">persistence/IdentifiableMongoDbPersistence.ts:311</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1264,7 +1266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L186">persistence/IdentifiableMongoDbPersistence.ts:186</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L188">persistence/IdentifiableMongoDbPersistence.ts:188</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1356,7 +1358,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#isopen">isOpen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L176">persistence/MongoDbPersistence.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L189">persistence/MongoDbPersistence.ts:189</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1378,7 +1380,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#open">open</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L211">persistence/MongoDbPersistence.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L224">persistence/MongoDbPersistence.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1434,7 +1436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L368">persistence/IdentifiableMongoDbPersistence.ts:368</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L370">persistence/IdentifiableMongoDbPersistence.ts:370</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1500,7 +1502,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#setreferences">setReferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/MongoDbPersistence.ts#L112">persistence/MongoDbPersistence.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L123">persistence/MongoDbPersistence.ts:123</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1538,7 +1540,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L407">persistence/IdentifiableMongoDbPersistence.ts:407</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L409">persistence/IdentifiableMongoDbPersistence.ts:409</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1603,7 +1605,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/e20c7b8/src/persistence/IdentifiableMongoDbPersistence.ts#L441">persistence/IdentifiableMongoDbPersistence.ts:441</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/IdentifiableMongoDbPersistence.ts#L443">persistence/IdentifiableMongoDbPersistence.ts:443</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
