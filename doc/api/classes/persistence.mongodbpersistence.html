@@ -77,16 +77,33 @@
 					<h3 id="configuration-parameters">Configuration parameters</h3>
 					<p>Parameters to pass to the <a href="persistence.mongodbpersistence.html#configure">configure</a> method for component configuration:</p>
 					<ul>
-						<li>&quot;connection(s).&lt;...&gt;&quot; - the connection resolver&#39;s connections;</li>
-						<li>&quot;credential(s).&lt;...&gt;&quot; - the credentials resolver&#39;s credentials;</li>
-						<li>&quot;collection&quot; - the MongoDB collection to work with;
-						<em>options</em></li>
-						<li>&quot;options.max_pool_size&quot; (default is 2);</li>
-						<li>&quot;options.keep_alive&quot; (default is 1);</li>
-						<li>&quot;options.connect_timeout&quot; (default is 5000);</li>
-						<li>&quot;options.auto_reconnect&quot; (default is <code>true</code>);</li>
-						<li>&quot;options.max_page_size&quot; (default is 100);</li>
-						<li>&quot;options.debug&quot; (default is <code>false</code>).</li>
+						<li><strong>connection(s)</strong><ul>
+								<li>&quot;connection.discovery_key&quot; - the key to use for connection resolving in a discovery service;</li>
+								<li>&quot;connection.protocol&quot; - the connection&#39;s protocol;</li>
+								<li>&quot;connection.uri&quot; - the Mongo URI;</li>
+								<li>&quot;connection.host&quot; - the Mongo host;</li>
+								<li>&quot;connection.port&quot; - the Mongo port;</li>
+								<li>&quot;connection.database&quot; - the Mongo Database;</li>
+							</ul>
+						</li>
+						<li><strong>credential(s)</strong><ul>
+								<li>&quot;credential.username&quot; - the username to use for authentication;</li>
+								<li>&quot;credential.password&quot; - the password;</li>
+								<li>&quot;credential.store_key&quot; - the key to use in the credential store;</li>
+								<li>&quot;credential.access_id&quot; - the access ID to use;</li>
+								<li>&quot;credential.access_key&quot; - the access key to use;</li>
+							</ul>
+						</li>
+						<li><strong>options</strong><ul>
+								<li>&quot;options.max_pool_size&quot; (default is 2);</li>
+								<li>&quot;options.keep_alive&quot; (default is 1);</li>
+								<li>&quot;options.connect_timeout&quot; (default is 5000);</li>
+								<li>&quot;options.auto_reconnect&quot; (default is <code>true</code>);</li>
+								<li>&quot;options.max_page_size&quot; (default is 100);</li>
+								<li>&quot;options.debug&quot; (default is <code>false</code>).</li>
+							</ul>
+						</li>
+						<li>&quot;collection&quot; - the MongoDB collection to work with;</li>
 					</ul>
 					<h3 id="references">References</h3>
 					<p>A logger and a connection resolver can be referenced by passing the following references
@@ -176,7 +193,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L91">persistence/MongoDbPersistence.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L100">persistence/MongoDbPersistence.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -220,7 +237,7 @@
 					<div class="tsd-signature tsd-kind-icon">_collection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L87">persistence/MongoDbPersistence.ts:87</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L96">persistence/MongoDbPersistence.ts:96</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -235,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L83">persistence/MongoDbPersistence.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L92">persistence/MongoDbPersistence.ts:92</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -250,7 +267,7 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="connect.mongodbconnectionresolver.html" class="tsd-signature-type">MongoDbConnectionResolver</a><span class="tsd-signature-symbol"> =&nbsp;new MongoDbConnectionResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L76">persistence/MongoDbPersistence.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L85">persistence/MongoDbPersistence.ts:85</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -271,7 +288,7 @@
 					<div class="tsd-signature tsd-kind-icon">_database<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L85">persistence/MongoDbPersistence.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L94">persistence/MongoDbPersistence.ts:94</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -286,7 +303,7 @@
 					<div class="tsd-signature tsd-kind-icon">_logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositeLogger</span><span class="tsd-signature-symbol"> =&nbsp;new CompositeLogger()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L70">persistence/MongoDbPersistence.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L79">persistence/MongoDbPersistence.ts:79</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -306,7 +323,7 @@
 					<div class="tsd-signature tsd-kind-icon">_model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L89">persistence/MongoDbPersistence.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L98">persistence/MongoDbPersistence.ts:98</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -321,7 +338,7 @@
 					<div class="tsd-signature tsd-kind-icon">_options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigParams</span><span class="tsd-signature-symbol"> =&nbsp;new ConfigParams()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L80">persistence/MongoDbPersistence.ts:80</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L89">persistence/MongoDbPersistence.ts:89</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -336,7 +353,7 @@
 					<div class="tsd-signature tsd-kind-icon">_schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L91">persistence/MongoDbPersistence.ts:91</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L100">persistence/MongoDbPersistence.ts:100</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -358,7 +375,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L284">persistence/MongoDbPersistence.ts:284</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L309">persistence/MongoDbPersistence.ts:309</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,7 +431,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L266">persistence/MongoDbPersistence.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L291">persistence/MongoDbPersistence.ts:291</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -470,7 +487,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L147">persistence/MongoDbPersistence.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L172">persistence/MongoDbPersistence.ts:172</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,16 +496,33 @@
 								</div>
 								<p><strong>Configuration parameters:</strong></p>
 								<ul>
-									<li>&quot;connection(s).&lt;...&gt;&quot; - the connection resolver&#39;s connections;</li>
-									<li>&quot;credential(s).&lt;...&gt;&quot; - the credentials resolver&#39;s credentials;</li>
-									<li>&quot;collection&quot; - the MongoDB collection to work with;
-									<em>options</em></li>
-									<li>&quot;options.max_pool_size&quot; (default is 2);</li>
-									<li>&quot;options.keep_alive&quot; (default is 1);</li>
-									<li>&quot;options.connect_timeout&quot; (default is 5000);</li>
-									<li>&quot;options.auto_reconnect&quot; (default is <code>true</code>);</li>
-									<li>&quot;options.max_page_size&quot; (default is 100);</li>
-									<li>&quot;options.debug&quot; (default is <code>false</code>).</li>
+									<li><strong>connection(s)</strong><ul>
+											<li>&quot;connection.discovery_key&quot; - the key to use for connection resolving in a discovery service;</li>
+											<li>&quot;connection.protocol&quot; - the connection&#39;s protocol;</li>
+											<li>&quot;connection.uri&quot; - the Mongo URI;</li>
+											<li>&quot;connection.host&quot; - the Mongo host;</li>
+											<li>&quot;connection.port&quot; - the Mongo port;</li>
+											<li>&quot;connection.database&quot; - the Mongo Database;</li>
+										</ul>
+									</li>
+									<li><strong>credential(s)</strong><ul>
+											<li>&quot;credential.username&quot; - the username to use for authentication;</li>
+											<li>&quot;credential.password&quot; - the password;</li>
+											<li>&quot;credential.store_key&quot; - the key to use in the credential store;</li>
+											<li>&quot;credential.access_id&quot; - the access ID to use;</li>
+											<li>&quot;credential.access_key&quot; - the access key to use;</li>
+										</ul>
+									</li>
+									<li><strong>options</strong><ul>
+											<li>&quot;options.max_pool_size&quot; (default is 2);</li>
+											<li>&quot;options.keep_alive&quot; (default is 1);</li>
+											<li>&quot;options.connect_timeout&quot; (default is 5000);</li>
+											<li>&quot;options.auto_reconnect&quot; (default is <code>true</code>);</li>
+											<li>&quot;options.max_page_size&quot; (default is 100);</li>
+											<li>&quot;options.debug&quot; (default is <code>false</code>).</li>
+										</ul>
+									</li>
+									<li>&quot;collection&quot; - the MongoDB collection to work with;</li>
 								</ul>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
@@ -519,7 +553,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L181">persistence/MongoDbPersistence.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L206">persistence/MongoDbPersistence.ts:206</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -552,7 +586,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L168">persistence/MongoDbPersistence.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L193">persistence/MongoDbPersistence.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -584,7 +618,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L189">persistence/MongoDbPersistence.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L214">persistence/MongoDbPersistence.ts:214</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -605,7 +639,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L224">persistence/MongoDbPersistence.ts:224</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L249">persistence/MongoDbPersistence.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -661,13 +695,19 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/ff3b068/src/persistence/MongoDbPersistence.ts#L123">persistence/MongoDbPersistence.ts:123</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/30e11d4/src/persistence/MongoDbPersistence.ts#L137">persistence/MongoDbPersistence.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Sets references to this MongoDbPersistence&#39;s logger and its connection resolver.</p>
 								</div>
+								<p><strong>References:</strong></p>
+								<ul>
+									<li>logger: <code>&quot;*:logger:*:*:1.0&quot;</code>;</li>
+									<li>discovery: <code>&quot;*:discovery:*:*:1.0&quot;</code> (for the connection resolver);</li>
+									<li>credential store: <code>&quot;*:credential-store:*:*:1.0&quot;</code> (for the connection resolver&#39;s credential resolver).</li>
+								</ul>
 								<dl class="tsd-comment-tags">
 									<dt>see</dt>
 									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html" class="external">IReferences</a> (in the PipServices &quot;Commons&quot; package)</p>
@@ -679,8 +719,8 @@
 								<li>
 									<h5>references: <span class="tsd-signature-type">IReferences</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>an IReferences object, containing references to a &quot;logger&quot;, a &quot;discovery&quot; service
-											(for the connection resolver), and a &quot;credential-store&quot; (for the connection resolver&#39;s
+										<p>an IReferences object, containing references to a logger, a discovery service
+											(for the connection resolver), and a credential store (for the connection resolver&#39;s
 										credential resolver).</p>
 									</div>
 								</li>

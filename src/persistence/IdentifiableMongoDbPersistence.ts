@@ -30,13 +30,15 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  * Parameters to pass to the [[configure]] method for component configuration:
  * 
  * - __connection(s)__
- *     - "connection.uri" - the mongo Uri;
- *     - "connection.host" - the mongo Host;
- *     - "connection.port" - the mongo Port;
- *     - "connection.database" - the mongo Database;
+ *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
+ *     - "connection.protocol" - the connection's protocol;
+ *     - "connection.uri" - the Mongo URI;
+ *     - "connection.host" - the Mongo host;
+ *     - "connection.port" - the Mongo port;
+ *     - "connection.database" - the Mongo Database;
  * - __credential(s)__
- *     - "credential.name" - the username to use for authentication;
- *     - "credential.pass" - the password;
+ *     - "credential.username" - the username to use for authentication;
+ *     - "credential.password" - the password;
  *     - "credential.store_key" - the key to use in the credential store;
  *     - "credential.access_id" - the access ID to use;
  *     - "credential.access_key" - the access key to use;
@@ -47,8 +49,7 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  *     - "options.auto_reconnect" (default is <code>true</code>);
  *     - "options.max_page_size" (default is 100);
  *     - "options.debug" (default is <code>false</code>).
- * 
- * - "collection" - the MongoDB collection to work with 
+ * - "collection" - the MongoDB collection to work with.
  * 
  * ### References ###
  * 
@@ -113,7 +114,7 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  */
 export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> extends MongoDbPersistence
     implements IWriter<T, K>, IGetter<T, K>, ISetter<T> {
-    //TODO: is this needed? It's in MongoDbPersistence as well...
+    //TODO (note for SS): is this needed? It's in MongoDbPersistence as well...
     protected _maxPageSize: number = 100;
 
     /**
@@ -134,19 +135,32 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
             throw new Error("Schema could not be null");
     }
 
-    //TODO: can be removed?
+    //TODO (note for SS): can be removed? _maxPageSize is already set in MongoDbPersistence.
     /**
-     * Configures this IdentifiableMongoDbPersistence by searching for and setting:
-     * - the connection resolver's connections and credentials ("connection(s)" and "credential(s)" 
-     * sections);
-     * - the MongoDB collection to work with ("collection" parameter);
-     * - this persistence's options ("options" section):
-     *     - "max_pool_size" (default is 2);
-     *     - "keep_alive" (default is 1);
-     *     - "connect_timeout" (default is 5000);
-     *     - "auto_reconnect" (default is <code>true</code>);
-     *     - "max_page_size" (default is 100);
-     *     - "debug" (default is <code>false</code>).
+     * Configures this IdentifiableMongoDbPersistence using the given configuration parameters.
+     * 
+     * __Configuration parameters:__
+     * - __connection(s)__
+     *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
+     *     - "connection.protocol" - the connection's protocol;
+     *     - "connection.uri" - the Mongo URI;
+     *     - "connection.host" - the Mongo host;
+     *     - "connection.port" - the Mongo port;
+     *     - "connection.database" - the Mongo Database;
+     * - __credential(s)__
+     *     - "credential.username" - the username to use for authentication;
+     *     - "credential.password" - the password;
+     *     - "credential.store_key" - the key to use in the credential store;
+     *     - "credential.access_id" - the access ID to use;
+     *     - "credential.access_key" - the access key to use;
+     * - __options__
+     *     - "options.max_pool_size" (default is 2);
+     *     - "options.keep_alive" (default is 1);
+     *     - "options.connect_timeout" (default is 5000);
+     *     - "options.auto_reconnect" (default is <code>true</code>);
+     *     - "options.max_page_size" (default is 100);
+     *     - "options.debug" (default is <code>false</code>).
+     * - "collection" - the MongoDB collection to work with.
      * 
      * @param config    the configuration parameters to configure this IdentifiableMongoDbPersistence with.
      * 
