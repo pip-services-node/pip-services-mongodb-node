@@ -5,14 +5,78 @@ const pip_services_commons_node_2 = require("pip-services-commons-node");
 const pip_services_components_node_1 = require("pip-services-components-node");
 const mongoose_1 = require("mongoose");
 const MongoDbConnectionResolver_1 = require("../connect/MongoDbConnectionResolver");
+/**
+ * Class that provides methods for working with MongoDB servers.
+ *
+ * MongoDbPersistences can be configured using the [[configure]] method, which searches for
+ * and sets:
+ *
+ * ### Configuration parameters ###
+ * Parameters to pass to the [[configure]] method for component configuration:
+ *
+ * - __connection(s)__
+ *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
+ *     - "connection.protocol" - the connection's protocol;
+ *     - "connection.uri" - the Mongo URI;
+ *     - "connection.host" - the Mongo host;
+ *     - "connection.port" - the Mongo port;
+ *     - "connection.database" - the Mongo Database;
+ * - __credential(s)__
+ *     - "credential.username" - the username to use for authentication;
+ *     - "credential.password" - the password;
+ *     - "credential.store_key" - the key to use in the credential store;
+ *     - "credential.access_id" - the access ID to use;
+ *     - "credential.access_key" - the access key to use;
+ * - __options__
+ *     - "options.max_pool_size" (default is 2);
+ *     - "options.keep_alive" (default is 1);
+ *     - "options.connect_timeout" (default is 5000);
+ *     - "options.auto_reconnect" (default is <code>true</code>);
+ *     - "options.max_page_size" (default is 100);
+ *     - "options.debug" (default is <code>false</code>).
+ * - "collection" - the MongoDB collection to work with;
+ *
+ *
+ * ### References ###
+ * A logger and a connection resolver can be referenced by passing the following references
+ * to the object's [[setReferences]] method:
+ *
+ * - logger: <code>"\*:logger:\*:\*:1.0"</code>
+ * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver),
+ * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the connection resolver's credential resolver)
+ *
+ * @see [[MongoDbConnectionResolver]]
+ */
 class MongoDbPersistence {
+    /**
+     * Creates a new MongoDbPersistence object. If a collection name and
+     * schema are given, then the MongoDbPersistence will be configured
+     * to work with the given collection and validate documents using the
+     * given schema. If these parameters are omitted - they can be configured
+     * later on using the [[configure]] method.
+     *
+     * @param collection    the name of the collection to work with.
+     * @param schema        the schema to use for document verification.
+     */
     constructor(collection, schema) {
         this._defaultConfig = pip_services_commons_node_1.ConfigParams.fromTuples("collection", null, 
         // connections.*
         // credential.*
         "options.max_pool_size", 2, "options.keep_alive", 1, "options.connect_timeout", 5000, "options.auto_reconnect", true, "options.max_page_size", 100, "options.debug", true, "options.replica_set", false);
+        /**
+         * The logger that is referenced by this object.
+         * @see [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html CompositeLogger]] (in the PipServices "Components" package)
+         */
         this._logger = new pip_services_components_node_1.CompositeLogger();
+        /**
+         * The connection resolver that is referenced by this object.
+         * Resolves MongoDB server URIs and the credentials that are to be used.
+         * @see [[MongoDbConnectionResolver]]
+         */
         this._connectionResolver = new MongoDbConnectionResolver_1.MongoDbConnectionResolver();
+        /**
+         * This persistence's options. Set during [[configure configuration]].
+         */
         this._options = new pip_services_commons_node_1.ConfigParams();
         this._connection = mongoose_1.createConnection();
         this._collection = collection;
@@ -22,10 +86,54 @@ class MongoDbPersistence {
             this._model = this._connection.model(collection, schema);
         }
     }
+    /**
+     * Sets references to this MongoDbPersistence's logger and its connection resolver.
+     *
+     * __References:__
+     * - logger: <code>"\*:logger:\*:\*:1.0"</code>;
+     * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver);
+     * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the connection resolver's credential resolver).
+     *
+     * @param references    an IReferences object, containing references to a logger, a discovery service
+     *                      (for the connection resolver), and a credential store (for the connection resolver's
+     *                      credential resolver).
+     *
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html IReferences]] (in the PipServices "Commons" package)
+     */
     setReferences(references) {
         this._logger.setReferences(references);
         this._connectionResolver.setReferences(references);
     }
+    /**
+     * Configures this MongoDbPersistence using the given configuration parameters.
+     *
+     * __Configuration parameters:__
+     * - __connection(s)__
+     *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
+     *     - "connection.protocol" - the connection's protocol;
+     *     - "connection.uri" - the Mongo URI;
+     *     - "connection.host" - the Mongo host;
+     *     - "connection.port" - the Mongo port;
+     *     - "connection.database" - the Mongo Database;
+     * - __credential(s)__
+     *     - "credential.username" - the username to use for authentication;
+     *     - "credential.password" - the password;
+     *     - "credential.store_key" - the key to use in the credential store;
+     *     - "credential.access_id" - the access ID to use;
+     *     - "credential.access_key" - the access key to use;
+     * - __options__
+     *     - "options.max_pool_size" (default is 2);
+     *     - "options.keep_alive" (default is 1);
+     *     - "options.connect_timeout" (default is 5000);
+     *     - "options.auto_reconnect" (default is <code>true</code>);
+     *     - "options.max_page_size" (default is 100);
+     *     - "options.debug" (default is <code>false</code>).
+     * - "collection" - the MongoDB collection to work with;
+     *
+     * @param config    the configuration parameters to configure this MongoDbPersistence with.
+     *
+     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     */
     configure(config) {
         config = config.setDefaults(this._defaultConfig);
         this._connectionResolver.configure(config);
@@ -37,16 +145,31 @@ class MongoDbPersistence {
         }
         this._options = this._options.override(config.getSection("options"));
     }
-    // Convert object to JSON format
+    /**
+     * Converts the given object to the public format (JSON).
+     *
+     * @param value     the object to convert to the public format.
+     * @returns the object's public version.
+     */
     convertToPublic(value) {
         if (value && value.toJSON)
             value = value.toJSON();
         return value;
     }
-    // Convert object from public format
+    /**
+     * Convert the given object from the public format (JSON) to its
+     * initial format.
+     *
+     * @param value     the object to convert from the public format.
+     * @returns the initial object.
+     */
     convertFromPublic(value) {
         return value;
     }
+    /**
+     * @returns whether or not this persistence is currently open and connected to a
+     *          MongoDB server.
+     */
     isOpen() {
         return this._connection.readyState == 1;
     }
@@ -71,6 +194,13 @@ class MongoDbPersistence {
         };
         return settings;
     }
+    /**
+     * Opens this MongoDB persistence by resolving and establishing a connection to the MongoDB server.
+     *
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          (optional) the function to call once a connection to the MongoDB server
+     *                          has been established. Will be called with an error if one is raised.
+     */
     open(correlationId, callback) {
         this._connectionResolver.resolve(correlationId, (err, uri) => {
             if (err) {
@@ -104,6 +234,13 @@ class MongoDbPersistence {
             }
         });
     }
+    /**
+     * Closes this MongoDB persistence disconnecting from the MongoDB server.
+     *
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          (optional) the function to call once disconnected from the MongoDB server.
+     *                          Will be called with an error if one is raised.
+     */
     close(correlationId, callback) {
         this._connection.close((err) => {
             if (err)
@@ -114,6 +251,13 @@ class MongoDbPersistence {
                 callback(err);
         });
     }
+    /**
+     * Clears the collection that this MongoDB persistence is connected to.
+     *
+     * @param correlationId     unique business transaction id to trace calls across components.
+     * @param callback          (optional) the function to call once the collection has been cleared.
+     *                          Will be called with an error if one is raised.
+     */
     clear(correlationId, callback) {
         // Return error if collection is not set
         if (this._collection == null) {

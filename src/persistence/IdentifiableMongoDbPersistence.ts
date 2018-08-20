@@ -332,7 +332,7 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
             let pos = _.random(0, count - 1);
 
             this._model.find(filter)
-                (pos >= 0 ? pos : 0)
+                .skip(pos >= 0 ? pos : 0)
                 .limit(1)
                 .exec((err, items) => {
                     let item = (items != null && items.length > 0) ? items[0] : null;
