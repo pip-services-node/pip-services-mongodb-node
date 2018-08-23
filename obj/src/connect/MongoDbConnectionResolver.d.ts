@@ -85,9 +85,9 @@ export declare class MongoDbConnectionResolver implements IReferenceable, IConfi
      * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
      */
     configure(config: ConfigParams): void;
-    private validateConnection(correlationId, connection);
-    private validateConnections(correlationId, connections);
-    private composeUri(connections, credential);
+    private validateConnection;
+    private validateConnections;
+    private composeUri;
     /**
      * Resolves the MongoDB server's uri, along with the credentials to use for the connection,
      * using the referenced connection and credential resolvers.

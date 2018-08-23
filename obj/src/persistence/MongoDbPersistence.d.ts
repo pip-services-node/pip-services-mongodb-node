@@ -154,7 +154,7 @@ export declare class MongoDbPersistence implements IReferenceable, IConfigurable
      *          MongoDB server.
      */
     isOpen(): boolean;
-    private composeSettings();
+    private composeSettings;
     /**
      * Opens this MongoDB persistence by resolving and establishing a connection to the MongoDB server.
      *
