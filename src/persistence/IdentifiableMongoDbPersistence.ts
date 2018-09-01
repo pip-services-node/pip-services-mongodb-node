@@ -61,54 +61,53 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the connection resolver's credential resolver) 
  * 
  * ### Examples ###
- * Example IdentifiableMongoDbPersistence implementation:
+ * 
+ * Example implementation of the IdentifiableMongoDbPersistence interface:
  * 
  *     export class MyDataMongoDbPersistence
  *       extends IdentifiableMongoDbPersistence<MyDataV1, string> {
  * 
- *       constructor() {
- *           super('mydata', MyDataMongoDbSchema());
- *           this._maxPageSize = 1000;
- *       }
+ *         constructor() {
+ *             super('mydata', MyDataMongoDbSchema());
+ *             this._maxPageSize = 1000;
+ *         }
  * 
- *       private composeFilter(filter: FilterParams): any {
- *           filter = filter || new FilterParams();
- *           let criteria = [];
- *           let udi = filter.getAsNullableString('udi');
- *           if (udi != null) {
- *               criteria.push({ udi: udi });
- *           }
- *           let udis = filter.getAsObject('udis');
- *           if (_.isString(udis))
- *               udis = udis.split(',');
- *           if (_.isArray(udis))
- *               criteria.push({ udi: { $in: udis } });
- *           return criteria.length > 0 ? { $and: criteria } : null;
- *       }
+ *         private composeFilter(filter: FilterParams): any {
+ *             filter = filter || new FilterParams();
+ *             let criteria = [];
+ *             let udi = filter.getAsNullableString('udi');
+ *             if (udi != null) {
+ *                 criteria.push({ udi: udi });
+ *             }
+ *             let udis = filter.getAsObject('udis');
+ *             if (_.isString(udis))
+ *                 udis = udis.split(',');
+ *             if (_.isArray(udis))
+ *                 criteria.push({ udi: { $in: udis } });
+ *             return criteria.length > 0 ? { $and: criteria } : null;
+ *         }
  * 
- *       public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
- *           callback: (err: any, page: DataPage<MyDataV1>) => void): void {
- *           super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
- *       }
+ *         public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+ *             callback: (err: any, page: DataPage<MyDataV1>) => void): void {
+ *             super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *         }
  *       
- *       public getOneByUdi(correlationId: string, udi: string,
- *           callback: (err: any, item: MyDataV1) => void): void {
- *           let criteria = {
- *               udi: udi
- *           };
- *           this._model.findOne(criteria, (err, item) => {
- *               item = this.convertFromPublic(item);
- *               if (item != null) this._logger.trace(correlationId, "Found my data by %s", udi);
- *               else this._logger.trace(correlationId, "Cannot find my data by %s", udi);
- *               callback(err, item);
- *           });
- *       }
+ *         public getOneByUdi(correlationId: string, udi: string,
+ *             callback: (err: any, item: MyDataV1) => void): void {
+ *             let criteria = {
+ *                 udi: udi
+ *             };
+ *             this._model.findOne(criteria, (err, item) => {
+ *                 item = this.convertFromPublic(item);
+ *                 if (item != null) this._logger.trace(correlationId, "Found my data by %s", udi);
+ *                 else this._logger.trace(correlationId, "Cannot find my data by %s", udi);
+ *                 callback(err, item);
+ *             });
+ *         }
  * 
- *       //other methods that are specific to working with MyDataV1 objects.
+ *         //other methods that are specific to working with MyDataV1 objects.
  * 
  *     }
- * 
- * 
  * 
  * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
  */
