@@ -148,8 +148,6 @@ class MongoDbConnectionResolver {
      *
      * @param correlationId     (optional) transaction id to trace execution through call chain.
      * @param callback 			callback function that receives resolved URI or error.
-     *
-     * @see [[IDiscovery]]
      */
     resolve(correlationId, callback) {
         let connections;
