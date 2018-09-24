@@ -19,97 +19,92 @@ import { ISetter } from 'pip-services-data-node';
 
 import { MongoDbPersistence } from './MongoDbPersistence';
 
-//TODO (in method comments): Which is better or more correct - "record" or "document"?
 /**
- * Contains method for working with a MongoDB collection that contains items of type T, 
- * [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html identifiable]]
- * by their keys of type K.
+ * Abstract persistence component that stores data in MongoDB
+ * and implements a number of CRUD operations over data items with unique ids.
+ * The data items must implement IIdentifiable interface.
  * 
+ * In basic scenarios child classes shall only override [[getPageByFilter]],
+ * [[getListByFilter]] or [[deleteByFilter]] operations with specific filter function.
+ * All other operations can be used out of the box. 
+ * 
+ * In complex scenarios child classes can implement additional operations by 
+ * accessing this._collection and this._model properties.
+
  * ### Configuration parameters ###
  * 
- * Parameters to pass to the [[configure]] method for component configuration:
- * 
- * - __connection(s)__
- *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
- *     - "connection.protocol" - the connection's protocol;
- *     - "connection.uri" - the Mongo URI;
- *     - "connection.host" - the Mongo host;
- *     - "connection.port" - the Mongo port;
- *     - "connection.database" - the Mongo Database;
- * - __credential(s)__
- *     - "credential.username" - the username to use for authentication;
- *     - "credential.password" - the password;
- *     - "credential.store_key" - the key to use in the credential store;
- *     - "credential.access_id" - the access ID to use;
- *     - "credential.access_key" - the access key to use;
- * - __options__
- *     - "options.max_pool_size" (default is 2);
- *     - "options.keep_alive" (default is 1);
- *     - "options.connect_timeout" (default is 5000);
- *     - "options.auto_reconnect" (default is <code>true</code>);
- *     - "options.max_page_size" (default is 100);
- *     - "options.debug" (default is <code>false</code>).
- * - "collection" - the MongoDB collection to work with.
+ * collection:                  (optional) MongoDB collection name
+ * connection(s):    
+ *   discovery_key:             (optional) a key to retrieve the connection from [[IDiscovery]]
+ *   host:                      host name or IP address
+ *   port:                      port number (default: 27017)
+ *   uri:                       resource URI or connection string with all parameters in it
+ * credential(s):    
+ *   store_key:                 (optional) a key to retrieve the credentials from [[ICredentialStore]]
+ *   username:                  (optional) user name
+ *   password:                  (optional) user password
+ * options:
+ *   max_pool_size:             (optional) maximum connection pool size (default: 2)
+ *   keep_alive:                (optional) enable connection keep alive (default: true)
+ *   connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
+ *   auto_reconnect:            (optional) enable auto reconnection (default: true)
+ *   max_page_size:             (optional) maximum page size (default: 100)
+ *   debug:                     (optional) enable debug output (default: false).
  * 
  * ### References ###
  * 
- * A logger and a connection resolver can be referenced by passing the following references
- * to the object's [[setReferences]] method:
+ * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
+ * - *:discovery:*:*:1.0        (optional) IDiscovery services
+ * - *:credential-store:*:*:1.0 (optional) Credential stores to resolve credentials
  * 
- * - logger: <code>"\*:logger:\*:\*:1.0"</code>
- * - discovery: <code>"\*:discovery:\*:\*:1.0"</code> (for the connection resolver), 
- * - credential store: <code>"\*:credential-store:\*:\*:1.0"</code> (for the connection resolver's credential resolver) 
+ * ### Example ###
  * 
- * ### Examples ###
+ * class MyMongoDbPersistence extends MongoDbPersistence<MyData, string> {
+ *    
+ *   public constructor() {
+ *       base("mydata", new MyDataMongoDbSchema());
+ *   }
  * 
- * Example implementation of the IdentifiableMongoDbPersistence interface:
+ *   private composeFilter(filter: FilterParams): any {
+ *       filter = filter || new FilterParams();
+ *       let criteria = [];
+ *       let name = filter.getAsNullableString('name');
+ *       if (name != null)
+ *           criteria.push({ name: name });
+ *       return criteria.length > 0 ? { $and: criteria } : null;
+ *   }
  * 
- *     export class MyDataMongoDbPersistence
- *       extends IdentifiableMongoDbPersistence<MyDataV1, string> {
+ *   public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+ *       callback: (err: any, page: DataPage<MyData>) => void): void {
+ *       base.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *   }
  * 
- *         constructor() {
- *             super('mydata', MyDataMongoDbSchema());
- *             this._maxPageSize = 1000;
- *         }
+ * }
  * 
- *         private composeFilter(filter: FilterParams): any {
- *             filter = filter || new FilterParams();
- *             let criteria = [];
- *             let udi = filter.getAsNullableString('udi');
- *             if (udi != null) {
- *                 criteria.push({ udi: udi });
- *             }
- *             let udis = filter.getAsObject('udis');
- *             if (_.isString(udis))
- *                 udis = udis.split(',');
- *             if (_.isArray(udis))
- *                 criteria.push({ udi: { $in: udis } });
- *             return criteria.length > 0 ? { $and: criteria } : null;
- *         }
+ * let persistence = new MyMongoDbPersistence();
+ * persistence.configure(ConfigParams.fromTuples(
+ *     "host", "localhost",
+ *     "port", 27017
+ * ));
  * 
- *         public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
- *             callback: (err: any, page: DataPage<MyDataV1>) => void): void {
- *             super.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
- *         }
- *       
- *         public getOneByUdi(correlationId: string, udi: string,
- *             callback: (err: any, item: MyDataV1) => void): void {
- *             let criteria = {
- *                 udi: udi
- *             };
- *             this._model.findOne(criteria, (err, item) => {
- *                 item = this.convertFromPublic(item);
- *                 if (item != null) this._logger.trace(correlationId, "Found my data by %s", udi);
- *                 else this._logger.trace(correlationId, "Cannot find my data by %s", udi);
- *                 callback(err, item);
+ * persitence.open("123", (err) => {
+ *     ...
+ * });
+ * 
+ * persistence.create("123", { id: "1", name: "ABC" }, (err, item) => {
+ *     persistence.getPageByFilter(
+ *         "123",
+ *         FilterParams.fromTuples("name", "ABC"),
+ *         null,
+ *         (err, page) => {
+ *             console.log(page.data);          // Result: { id: "1", name: "ABC" }
+ * 
+ *             persistence.deleteById("123", "1", (err, item) => {
+ *                ....
  *             });
  *         }
- * 
- *         //other methods that are specific to working with MyDataV1 objects.
- * 
- *     }
- * 
- * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html IIdentifiable]] (in the PipServices "Commons" package)
+ *     )
+ * });
  */
 export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> extends MongoDbPersistence
     implements IWriter<T, K>, IGetter<T, K>, ISetter<T> {
@@ -117,13 +112,10 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     protected _maxPageSize: number = 100;
 
     /**
-     * Creates a new IdentifiableMongoDbPersistence object and initializes it 
-     * using the given collection name and schema.
+     * Creates a new instance of the persistence component.
      * 
-     * @param collection    the name of the collection to work with. Cannot be null.
-     * @param schema        the schema to use for document verification. Cannot be null.
-     * 
-     * @throws an Error if the collection or schema are <code>null</code>.
+     * @param collection    (optional) a collection name.
+     * @param schema        (optional) a Mongoose schema. 
      */
     public constructor(collection: string, schema: Schema) {
         super(collection, schema);
@@ -134,36 +126,10 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
             throw new Error("Schema could not be null");
     }
 
-    //TODO (note for SS): can be removed? _maxPageSize is already set in MongoDbPersistence.
     /**
-     * Configures this IdentifiableMongoDbPersistence using the given configuration parameters.
+     * Configures component by passing configuration parameters.
      * 
-     * __Configuration parameters:__
-     * - __connection(s)__
-     *     - "connection.discovery_key" - the key to use for connection resolving in a discovery service;
-     *     - "connection.protocol" - the connection's protocol;
-     *     - "connection.uri" - the Mongo URI;
-     *     - "connection.host" - the Mongo host;
-     *     - "connection.port" - the Mongo port;
-     *     - "connection.database" - the Mongo Database;
-     * - __credential(s)__
-     *     - "credential.username" - the username to use for authentication;
-     *     - "credential.password" - the password;
-     *     - "credential.store_key" - the key to use in the credential store;
-     *     - "credential.access_id" - the access ID to use;
-     *     - "credential.access_key" - the access key to use;
-     * - __options__
-     *     - "options.max_pool_size" (default is 2);
-     *     - "options.keep_alive" (default is 1);
-     *     - "options.connect_timeout" (default is 5000);
-     *     - "options.auto_reconnect" (default is <code>true</code>);
-     *     - "options.max_page_size" (default is 100);
-     *     - "options.debug" (default is <code>false</code>).
-     * - "collection" - the MongoDB collection to work with.
-     * 
-     * @param config    the configuration parameters to configure this IdentifiableMongoDbPersistence with.
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html ConfigParams]] (in the PipServices "Commons" package)
+     * @param config    configuration parameters to be set.
      */
     public configure(config: ConfigParams): void {
         super.configure(config);
@@ -181,22 +147,18 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
         return this.convertFromPublic(value);
     }    
     
-    //TODO: "filter" and "sort" - functions, queries? + is "select" correct?
-    //     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html FilterParams]] (in the PipServices "Commons" package)
-    //     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
     /**
-     * Retrieves DataPages in accordance with the given parameters.
+     * Gets a page of data items retrieved by a given filter and sorted according to sort parameters.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param filter            the function to use for filtering results.
-     * @param paging            the paging parameters to use.
-     * @param sort              the function to use for sorting results.
-     * @param select            the function to select results by.
-     * @param callback          the function to call with the retrieved pages 
-     *                          (or with an error, if one is raised).
+     * This method shall be called by a public getPageByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
      * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.datapage.html DataPage]] (in the PipServices "Commons" package)
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.pagingparams.html PagingParams]] (in the PipServices "Commons" package)
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter JSON object
+     * @param paging            (optional) paging parameters
+     * @param sort              (optional) sorting JSON object
+     * @param select            (optional) projection JSON object
+     * @param callback          callback function that receives a data page or error.
      */
     protected getPageByFilter(correlationId: string, filter: any, paging: PagingParams, 
         sort: any, select: any, callback: (err: any, items: DataPage<T>) => void): void {
@@ -242,18 +204,18 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
         });
     }
 
-    //TODO: "filter" and "sort" - functions, queries? + is "select" correct?
-    //     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.filterparams.html FilterParams]] (in the PipServices "Commons" package)
-    //     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.sortparams.html SortParams]] (in the PipServices "Commons" package)
     /**
-     * Retrieves a list of items in accordance with the given parameters.
+     * Gets a list of data items retrieved by a given filter and sorted according to sort parameters.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param filter            the function to use for filtering results.
-     * @param sort              the function to use for sorting results.
-     * @param select            the function to select results by.
-     * @param callback          the function to call with the retrieved list of items 
-     *                          (or with an error, if one is raised).
+     * This method shall be called by a public getListByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId    (optional) transaction id to trace execution through call chain.
+     * @param filter           (optional) a filter JSON object
+     * @param paging           (optional) paging parameters
+     * @param sort             (optional) sorting JSON object
+     * @param select           (optional) projection JSON object
+     * @param callback         callback function that receives a data list or error.
      */
     protected getListByFilter(correlationId: string, filter: any, sort: any, select: any, 
         callback: (err: any, items: T[]) => void): void {
@@ -279,12 +241,11 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Retrieves the items with the given IDs. 
+     * Gets a list of data items retrieved by given unique ids.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param ids               the ids of the items to retrieve.
-     * @param callback          the function to call with the retrieved list of items 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param ids               ids of data items to be retrieved
+     * @param callback         callback function that receives a data list or error.
      */
     public getListByIds(correlationId: string, ids: K[],
         callback: (err: any, items: T[]) => void): void {
@@ -295,12 +256,11 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Retrieves an item by its ID. 
+     * Gets a data item by its unique id.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param id                the id of the item to retrieve.
-     * @param callback          the function to call with the retrieved item 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param id                an id of data item to be retrieved.
+     * @param callback          callback function that receives data item or error.
      */
     public getOneById(correlationId: string, id: K, callback: (err: any, item: T) => void): void {
         this._model.findById(id, (err, item) => {
@@ -312,14 +272,15 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
         });
     }
 
-    //TODO: "filter" = function? Check in Data.Persistence(s) as well...
     /**
-     * Retrieves a random item from the ones that are stored. 
+     * Gets a random item from items that match to a given filter.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param filter            the filtering function to filter the result by.
-     * @param callback          the function to call with the randomly retrieved item 
-     *                          (or with an error, if one is raised).
+     * This method shall be called by a public getOneRandom method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter JSON object
+     * @param callback          callback function that receives a random item or error.
      */
     protected getOneRandom(correlationId: string, filter: any, callback: (err: any, item: T) => void): void {
         this._model.count(filter, (err, count) => {
@@ -343,14 +304,11 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Creates a record of the given item in the database.
+     * Creates a data item.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param item              the item to create a record of.
-     * @param callback          (optional) the function to call with the created record 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[save]]
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be created.
+     * @param callback          (optional) callback function that receives created item or error.
      */
     public create(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         if (item == null) {
@@ -373,12 +331,12 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Upserts the given item in the database.
+     * Sets a data item. If the data item exists it updates it,
+     * otherwise it create a new data item.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param item              the item to upsert.
-     * @param callback          (optional) the function to call with the item that was upserted 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              a item to be set.
+     * @param callback          (optional) callback function that receives updated item or error.
      */
     public set(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         if (item == null) {
@@ -412,12 +370,11 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Updates the record of the given item.
+     * Updates a data item.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param item              the item to update.
-     * @param callback          (optional) the function to call with the updated item 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param item              an item to be updated.
+     * @param callback          (optional) callback function that receives updated item or error.
      */
     public update(correlationId: string, item: T, callback?: (err: any, item: T) => void): void {
         if (item == null || item.id == null) {
@@ -443,15 +400,12 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Performes a partial update for the record with the given ID.
+     * Updates only few selected fields in a data item.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param id                the id of the item that is to be updated (partially).
-     * @param data              the map of items to update in the record.
-     * @param callback          (optional) the function to call with the updated item 
-     *                          (or with an error, if one is raised).
-     * 
-     * @see [[https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.anyvaluemap.html AnyValueMap]]
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of data item to be updated.
+     * @param data              a map with fields to be updated.
+     * @param callback          callback function that receives updated item or error.
      */
     public updatePartially(correlationId: string, id: K, data: AnyValueMap,
         callback?: (err: any, item: T) => void): void {
@@ -483,12 +437,11 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Deletes the item with the given ID.
+     * Deleted a data item by it's unique id.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param id                the id of the item that is to be deleted.
-     * @param callback          (optional) the function to call with the deleted item 
-     *                          (or with an error, if one is raised).
+     * @param correlation_id    (optional) transaction id to trace execution through call chain.
+     * @param id                an id of the item to be deleted
+     * @param callback          (optional) callback function that receives deleted item or error.
      */
     public deleteById(correlationId: string, id: K, callback?: (err: any, item: T) => void): void {
         this._model.findByIdAndRemove(id, (err, oldItem) => {
@@ -503,12 +456,14 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Deletes the items that match the given filter.
+     * Deletes data items that match to a given filter.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param filter            the filter to use for determining what items to delete.
-     * @param callback          (optional) the function to call once the items have been deleted 
-     *                          (or with an error, if one is raised).
+     * This method shall be called by a public deleteByFilter method from child class that
+     * receives FilterParams and converts them into a filter function.
+     * 
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param filter            (optional) a filter JSON object.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     public deleteByFilter(correlationId: string, filter: any, callback?: (err: any) => void): void {
         this._model.remove(filter, (err, count) => {
@@ -520,12 +475,11 @@ export class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> exten
     }
 
     /**
-     * Deletes the items with the given IDs.
+     * Deletes multiple data items by their unique ids.
      * 
-     * @param correlationId     unique business transaction id to trace calls across components.
-     * @param ids               the ids of the items that are to be deleted.
-     * @param callback          (optional) the function to call once the items have been deleted 
-     *                          (or with an error, if one is raised).
+     * @param correlationId     (optional) transaction id to trace execution through call chain.
+     * @param ids               ids of data items to be deleted.
+     * @param callback          (optional) callback function that receives error or null for success.
      */
     public deleteByIds(correlationId: string, ids: K[], callback?: (err: any) => void): void {
         let filter = {
