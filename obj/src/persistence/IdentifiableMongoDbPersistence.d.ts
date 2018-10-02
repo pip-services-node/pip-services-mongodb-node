@@ -18,82 +18,85 @@ import { MongoDbPersistence } from './MongoDbPersistence';
  * All other operations can be used out of the box.
  *
  * In complex scenarios child classes can implement additional operations by
- * accessing this._collection and this._model properties.
+ * accessing <code>this._collection</code> and <code>this._model</code> properties.
 
  * ### Configuration parameters ###
  *
  * collection:                  (optional) MongoDB collection name
+ *
  * connection(s):
- *   discovery_key:             (optional) a key to retrieve the connection from [[IDiscovery]]
- *   host:                      host name or IP address
- *   port:                      port number (default: 27017)
- *   uri:                       resource URI or connection string with all parameters in it
+ *   - discovery_key:             (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
+ *   - host:                      host name or IP address
+ *   - port:                      port number (default: 27017)
+ *   - uri:                       resource URI or connection string with all parameters in it
+ *
  * credential(s):
- *   store_key:                 (optional) a key to retrieve the credentials from [[ICredentialStore]]
- *   username:                  (optional) user name
- *   password:                  (optional) user password
+ *   - store_key:                 (optional) a key to retrieve the credentials from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]]
+ *   - username:                  (optional) user name
+ *   - password:                  (optional) user password
+ *
  * options:
- *   max_pool_size:             (optional) maximum connection pool size (default: 2)
- *   keep_alive:                (optional) enable connection keep alive (default: true)
- *   connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
- *   auto_reconnect:            (optional) enable auto reconnection (default: true)
- *   max_page_size:             (optional) maximum page size (default: 100)
- *   debug:                     (optional) enable debug output (default: false).
+ *   - max_pool_size:             (optional) maximum connection pool size (default: 2)
+ *   - keep_alive:                (optional) enable connection keep alive (default: true)
+ *   - connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
+ *   - auto_reconnect:            (optional) enable auto reconnection (default: true)
+ *   - max_page_size:             (optional) maximum page size (default: 100)
+ *   - debug:                     (optional) enable debug output (default: false).
  *
  * ### References ###
  *
- * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
- * - *:discovery:*:*:1.0        (optional) IDiscovery services
- * - *:credential-store:*:*:1.0 (optional) Credential stores to resolve credentials
+ * - <code>*:logger:*:*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages components to pass log messages
+ * - <code>*:discovery:*:*:1.0</code>        (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
+ * - <code>*:credential-store:*:*:1.0</code> (optional) Credential stores to resolve credentials
  *
  * ### Example ###
  *
- * class MyMongoDbPersistence extends MongoDbPersistence<MyData, string> {
+ *     class MyMongoDbPersistence extends MongoDbPersistence<MyData, string> {
  *
- *   public constructor() {
- *       base("mydata", new MyDataMongoDbSchema());
- *   }
+ *     public constructor() {
+ *         base("mydata", new MyDataMongoDbSchema());
+ *     }
  *
- *   private composeFilter(filter: FilterParams): any {
- *       filter = filter || new FilterParams();
- *       let criteria = [];
- *       let name = filter.getAsNullableString('name');
- *       if (name != null)
- *           criteria.push({ name: name });
- *       return criteria.length > 0 ? { $and: criteria } : null;
- *   }
+ *     private composeFilter(filter: FilterParams): any {
+ *         filter = filter || new FilterParams();
+ *         let criteria = [];
+ *         let name = filter.getAsNullableString('name');
+ *         if (name != null)
+ *             criteria.push({ name: name });
+ *         return criteria.length > 0 ? { $and: criteria } : null;
+ *     }
  *
- *   public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
- *       callback: (err: any, page: DataPage<MyData>) => void): void {
- *       base.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
- *   }
+ *     public getPageByFilter(correlationId: string, filter: FilterParams, paging: PagingParams,
+ *         callback: (err: any, page: DataPage<MyData>) => void): void {
+ *         base.getPageByFilter(correlationId, this.composeFilter(filter), paging, null, null, callback);
+ *     }
  *
- * }
+ *     }
  *
- * let persistence = new MyMongoDbPersistence();
- * persistence.configure(ConfigParams.fromTuples(
- *     "host", "localhost",
- *     "port", 27017
- * ));
+ *     let persistence = new MyMongoDbPersistence();
+ *     persistence.configure(ConfigParams.fromTuples(
+ *         "host", "localhost",
+ *         "port", 27017
+ *     ));
  *
- * persitence.open("123", (err) => {
- *     ...
- * });
+ *     persitence.open("123", (err) => {
+ *         ...
+ *     });
  *
- * persistence.create("123", { id: "1", name: "ABC" }, (err, item) => {
- *     persistence.getPageByFilter(
- *         "123",
- *         FilterParams.fromTuples("name", "ABC"),
- *         null,
- *         (err, page) => {
- *             console.log(page.data);          // Result: { id: "1", name: "ABC" }
+ *     persistence.create("123", { id: "1", name: "ABC" }, (err, item) => {
+ *         persistence.getPageByFilter(
+ *             "123",
+ *             FilterParams.fromTuples("name", "ABC"),
+ *             null,
+ *             (err, page) => {
+ *                 console.log(page.data);          // Result: { id: "1", name: "ABC" }
  *
- *             persistence.deleteById("123", "1", (err, item) => {
- *                ....
- *             });
- *         }
- *     )
- * });
+ *                 persistence.deleteById("123", "1", (err, item) => {
+ *                    ...
+ *                 });
+ *             }
+ *         )
+ *     });
  */
 export declare class IdentifiableMongoDbPersistence<T extends IIdentifiable<K>, K> extends MongoDbPersistence implements IWriter<T, K>, IGetter<T, K>, ISetter<T> {
     protected _maxPageSize: number;

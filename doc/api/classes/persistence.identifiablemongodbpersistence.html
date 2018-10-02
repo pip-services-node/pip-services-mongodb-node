@@ -70,101 +70,93 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Contains method for working with a MongoDB collection that contains items of type T,
-							<a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">identifiable</a>
-						by their keys of type K.</p>
+						<p>Abstract persistence component that stores data in MongoDB
+							and implements a number of CRUD operations over data items with unique ids.
+						The data items must implement IIdentifiable interface.</p>
 					</div>
+					<p>In basic scenarios child classes shall only override <a href="persistence.identifiablemongodbpersistence.html#getpagebyfilter">getPageByFilter</a>,
+						<a href="persistence.identifiablemongodbpersistence.html#getlistbyfilter">getListByFilter</a> or <a href="persistence.identifiablemongodbpersistence.html#deletebyfilter">deleteByFilter</a> operations with specific filter function.
+					All other operations can be used out of the box.</p>
+					<p>In complex scenarios child classes can implement additional operations by
+					accessing <code>this._collection</code> and <code>this._model</code> properties.</p>
 					<h3 id="configuration-parameters">Configuration parameters</h3>
-					<p>Parameters to pass to the <a href="persistence.identifiablemongodbpersistence.html#configure">configure</a> method for component configuration:</p>
+					<p>collection:                  (optional) MongoDB collection name</p>
+					<p>connection(s):</p>
 					<ul>
-						<li><strong>connection(s)</strong><ul>
-								<li>&quot;connection.discovery_key&quot; - the key to use for connection resolving in a discovery service;</li>
-								<li>&quot;connection.protocol&quot; - the connection&#39;s protocol;</li>
-								<li>&quot;connection.uri&quot; - the Mongo URI;</li>
-								<li>&quot;connection.host&quot; - the Mongo host;</li>
-								<li>&quot;connection.port&quot; - the Mongo port;</li>
-								<li>&quot;connection.database&quot; - the Mongo Database;</li>
-							</ul>
-						</li>
-						<li><strong>credential(s)</strong><ul>
-								<li>&quot;credential.username&quot; - the username to use for authentication;</li>
-								<li>&quot;credential.password&quot; - the password;</li>
-								<li>&quot;credential.store_key&quot; - the key to use in the credential store;</li>
-								<li>&quot;credential.access_id&quot; - the access ID to use;</li>
-								<li>&quot;credential.access_key&quot; - the access key to use;</li>
-							</ul>
-						</li>
-						<li><strong>options</strong><ul>
-								<li>&quot;options.max_pool_size&quot; (default is 2);</li>
-								<li>&quot;options.keep_alive&quot; (default is 1);</li>
-								<li>&quot;options.connect_timeout&quot; (default is 5000);</li>
-								<li>&quot;options.auto_reconnect&quot; (default is <code>true</code>);</li>
-								<li>&quot;options.max_page_size&quot; (default is 100);</li>
-								<li>&quot;options.debug&quot; (default is <code>false</code>).</li>
-							</ul>
-						</li>
-						<li>&quot;collection&quot; - the MongoDB collection to work with.</li>
+						<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
+						<li>host:                      host name or IP address</li>
+						<li>port:                      port number (default: 27017)</li>
+						<li>uri:                       resource URI or connection string with all parameters in it</li>
+					</ul>
+					<p>credential(s):</p>
+					<ul>
+						<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
+						<li>username:                  (optional) user name</li>
+						<li>password:                  (optional) user password</li>
+					</ul>
+					<p>options:</p>
+					<ul>
+						<li>max_pool_size:             (optional) maximum connection pool size (default: 2)</li>
+						<li>keep_alive:                (optional) enable connection keep alive (default: true)</li>
+						<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</li>
+						<li>auto_reconnect:            (optional) enable auto reconnection (default: true)</li>
+						<li>max_page_size:             (optional) maximum page size (default: 100)</li>
+						<li>debug:                     (optional) enable debug output (default: false).</li>
 					</ul>
 					<h3 id="references">References</h3>
-					<p>A logger and a connection resolver can be referenced by passing the following references
-					to the object&#39;s <a href="persistence.identifiablemongodbpersistence.html#setreferences">setReferences</a> method:</p>
 					<ul>
-						<li>logger: <code>&quot;*:logger:*:*:1.0&quot;</code></li>
-						<li>discovery: <code>&quot;*:discovery:*:*:1.0&quot;</code> (for the connection resolver),</li>
-						<li>credential store: <code>&quot;*:credential-store:*:*:1.0&quot;</code> (for the connection resolver&#39;s credential resolver)</li>
+						<li><code><em>:logger:</em>:*:1.0</code>           (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages components to pass log messages</li>
+						<li><code><em>:discovery:</em>:*:1.0</code>        (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
+						<li><code><em>:credential-store:</em>:*:1.0</code> (optional) Credential stores to resolve credentials</li>
 					</ul>
-					<h3 id="examples">Examples</h3>
-					<p>Example implementation of the IdentifiableMongoDbPersistence interface:</p>
-					<pre><code><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> MyDataMongoDbPersistence
-  <span class="hljs-keyword">extends</span> IdentifiableMongoDbPersistence&lt;MyDataV1, <span class="hljs-built_in">string</span>&gt; {
+					<h3 id="example">Example</h3>
+					<pre><code><span class="hljs-keyword">class</span> MyMongoDbPersistence <span class="hljs-keyword">extends</span> MongoDbPersistence&lt;MyData, <span class="hljs-built_in">string</span>&gt; {
 
-    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
-        <span class="hljs-keyword">super</span>(<span class="hljs-string">'mydata'</span>, MyDataMongoDbSchema());
-        <span class="hljs-keyword">this</span>._maxPageSize = <span class="hljs-number">1000</span>;
-    }
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+    base(<span class="hljs-string">"mydata"</span>, <span class="hljs-keyword">new</span> MyDataMongoDbSchema());
+}
 
-    <span class="hljs-keyword">private</span> composeFilter(filter: FilterParams): <span class="hljs-built_in">any</span> {
-        filter = filter || <span class="hljs-keyword">new</span> FilterParams();
-        <span class="hljs-keyword">let</span> criteria = [];
-        <span class="hljs-keyword">let</span> udi = filter.getAsNullableString(<span class="hljs-string">'udi'</span>);
-        <span class="hljs-keyword">if</span> (udi != <span class="hljs-literal">null</span>) {
-            criteria.push({ udi: udi });
-        }
-        <span class="hljs-keyword">let</span> udis = filter.getAsObject(<span class="hljs-string">'udis'</span>);
-        <span class="hljs-keyword">if</span> (_.isString(udis))
-            udis = udis.split(<span class="hljs-string">','</span>);
-        <span class="hljs-keyword">if</span> (_.isArray(udis))
-            criteria.push({ udi: { $<span class="hljs-keyword">in</span>: udis } });
-        <span class="hljs-keyword">return</span> criteria.length &gt; <span class="hljs-number">0</span> ? { $and: criteria } : <span class="hljs-literal">null</span>;
-    }
+<span class="hljs-keyword">private</span> composeFilter(filter: FilterParams): <span class="hljs-built_in">any</span> {
+    filter = filter || <span class="hljs-keyword">new</span> FilterParams();
+    <span class="hljs-keyword">let</span> criteria = [];
+    <span class="hljs-keyword">let</span> name = filter.getAsNullableString(<span class="hljs-string">'name'</span>);
+    <span class="hljs-keyword">if</span> (name != <span class="hljs-literal">null</span>)
+        criteria.push({ name: name });
+    <span class="hljs-keyword">return</span> criteria.length &gt; <span class="hljs-number">0</span> ? { $and: criteria } : <span class="hljs-literal">null</span>;
+}
 
-    <span class="hljs-keyword">public</span> getPageByFilter(correlationId: <span class="hljs-built_in">string</span>, filter: FilterParams, paging: PagingParams,
-        callback: <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">any</span>, page: DataPage&lt;MyDataV1&gt;</span>) =&gt;</span> <span class="hljs-built_in">void</span>): <span class="hljs-built_in">void</span> {
-        <span class="hljs-keyword">super</span>.getPageByFilter(correlationId, <span class="hljs-keyword">this</span>.composeFilter(filter), paging, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, callback);
-    }
-
-    <span class="hljs-keyword">public</span> getOneByUdi(correlationId: <span class="hljs-built_in">string</span>, udi: <span class="hljs-built_in">string</span>,
-        callback: <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">any</span>, item: MyDataV1</span>) =&gt;</span> <span class="hljs-built_in">void</span>): <span class="hljs-built_in">void</span> {
-        <span class="hljs-keyword">let</span> criteria = {
-            udi: udi
-        };
-        <span class="hljs-keyword">this</span>._model.findOne(criteria, <span class="hljs-function">(<span class="hljs-params">err, item</span>) =&gt;</span> {
-            item = <span class="hljs-keyword">this</span>.convertFromPublic(item);
-            <span class="hljs-keyword">if</span> (item != <span class="hljs-literal">null</span>) <span class="hljs-keyword">this</span>._logger.trace(correlationId, <span class="hljs-string">"Found my data by %s"</span>, udi);
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">this</span>._logger.trace(correlationId, <span class="hljs-string">"Cannot find my data by %s"</span>, udi);
-            callback(err, item);
-        });
-    }
-
-    <span class="hljs-comment">//other methods that are specific to working with MyDataV1 objects.</span>
+<span class="hljs-keyword">public</span> getPageByFilter(correlationId: <span class="hljs-built_in">string</span>, filter: FilterParams, paging: PagingParams,
+    callback: <span class="hljs-function">(<span class="hljs-params">err: <span class="hljs-built_in">any</span>, page: DataPage&lt;MyData&gt;</span>) =&gt;</span> <span class="hljs-built_in">void</span>): <span class="hljs-built_in">void</span> {
+    base.getPageByFilter(correlationId, <span class="hljs-keyword">this</span>.composeFilter(filter), paging, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, callback);
+}
 
 }
+
+<span class="hljs-keyword">let</span> persistence = <span class="hljs-keyword">new</span> MyMongoDbPersistence();
+persistence.configure(ConfigParams.fromTuples(
+    <span class="hljs-string">"host"</span>, <span class="hljs-string">"localhost"</span>,
+    <span class="hljs-string">"port"</span>, <span class="hljs-number">27017</span>
+));
+
+persitence.open(<span class="hljs-string">"123"</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+    ...
+});
+
+persistence.create(<span class="hljs-string">"123"</span>, { id: <span class="hljs-string">"1"</span>, name: <span class="hljs-string">"ABC"</span> }, <span class="hljs-function">(<span class="hljs-params">err, item</span>) =&gt;</span> {
+    persistence.getPageByFilter(
+        <span class="hljs-string">"123"</span>,
+        FilterParams.fromTuples(<span class="hljs-string">"name"</span>, <span class="hljs-string">"ABC"</span>),
+        <span class="hljs-literal">null</span>,
+        <span class="hljs-function">(<span class="hljs-params">err, page</span>) =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(page.data);          <span class="hljs-comment">// Result: { id: "1", name: "ABC" }</span>
+
+            persistence.deleteById(<span class="hljs-string">"123"</span>, <span class="hljs-string">"1"</span>, <span class="hljs-function">(<span class="hljs-params">err, item</span>) =&gt;</span> {
+               ...
+            });
+        }
+    )
+});
 </code></pre>
-					<dl class="tsd-comment-tags">
-						<dt>see</dt>
-						<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/data.iidentifiable.html" class="external">IIdentifiable</a> (in the PipServices &quot;Commons&quot; package)</p>
-						</dd>
-					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -269,19 +261,13 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L117">persistence/IdentifiableMongoDbPersistence.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L115">persistence/IdentifiableMongoDbPersistence.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a new IdentifiableMongoDbPersistence object and initializes it
-									using the given collection name and schema.</p>
+									<p>Creates a new instance of the persistence component.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>throws</dt>
-									<dd><p>an Error if the collection or schema are <code>null</code>.</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -289,7 +275,7 @@
 									<h5>collection: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>the name of the collection to work with. Cannot be null.</p>
+											<p>(optional) a collection name.</p>
 										</div>
 									</div>
 								</li>
@@ -297,7 +283,7 @@
 									<h5>schema: <span class="tsd-signature-type">Schema</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>the schema to use for document verification. Cannot be null.</p>
+											<p>(optional) a Mongoose schema.</p>
 										</div>
 									</div>
 								</li>
@@ -316,12 +302,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_collection">_collection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L96">persistence/MongoDbPersistence.ts:96</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L132">persistence/MongoDbPersistence.ts:132</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The MongoDB collection to work with.</p>
+							<p>The MongoDB colleciton object.</p>
 						</div>
 					</div>
 				</section>
@@ -332,12 +318,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_connection">_connection</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L92">persistence/MongoDbPersistence.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L124">persistence/MongoDbPersistence.ts:124</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Stores the opened MongoDB server connection(s). Used to work with models.</p>
+							<p>The MongoDB connection object.</p>
 						</div>
 					</div>
 				</section>
@@ -348,19 +334,13 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_connectionresolver">_connectionResolver</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L85">persistence/MongoDbPersistence.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L115">persistence/MongoDbPersistence.ts:115</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The connection resolver that is referenced by this object.
-							Resolves MongoDB server URIs and the credentials that are to be used.</p>
+							<p>The connection resolver.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>see</dt>
-							<dd><p><a href="connect.mongodbconnectionresolver.html">MongoDbConnectionResolver</a></p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
@@ -370,12 +350,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_database">_database</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L94">persistence/MongoDbPersistence.ts:94</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L128">persistence/MongoDbPersistence.ts:128</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The Mongo database&#39;s name.</p>
+							<p>The MongoDB database name.</p>
 						</div>
 					</div>
 				</section>
@@ -386,18 +366,13 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_logger">_logger</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L79">persistence/MongoDbPersistence.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L111">persistence/MongoDbPersistence.ts:111</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The logger that is referenced by this object.</p>
+							<p>The logger.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>see</dt>
-							<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/classes/log.compositelogger.html" class="external">CompositeLogger</a> (in the PipServices &quot;Components&quot; package)</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
@@ -406,7 +381,7 @@
 					<div class="tsd-signature tsd-kind-icon">_max<wbr>Page<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;100</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L117">persistence/IdentifiableMongoDbPersistence.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L115">persistence/IdentifiableMongoDbPersistence.ts:115</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -417,12 +392,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_model">_model</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L98">persistence/MongoDbPersistence.ts:98</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L136">persistence/MongoDbPersistence.ts:136</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The connection&#39;s model. Chosen using this object&#39;s collection and schema.</p>
+							<p>The Mongoose model object.</p>
 						</div>
 					</div>
 				</section>
@@ -433,12 +408,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_options">_options</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L89">persistence/MongoDbPersistence.ts:89</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L119">persistence/MongoDbPersistence.ts:119</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>This persistence&#39;s options. Set during <a href="persistence.identifiablemongodbpersistence.html#configure">configuration</a>.</p>
+							<p>The configuration options.</p>
 						</div>
 					</div>
 				</section>
@@ -449,12 +424,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#_schema">_schema</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L100">persistence/MongoDbPersistence.ts:100</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L140">persistence/MongoDbPersistence.ts:140</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The schema to use for document verification.</p>
+							<p>The Mongoose schema.</p>
 						</div>
 					</div>
 				</section>
@@ -472,12 +447,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L309">persistence/MongoDbPersistence.ts:309</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L308">persistence/MongoDbPersistence.ts:308</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Clears the collection that this MongoDB persistence is connected to.</p>
+									<p>Clears component state.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -485,14 +460,13 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the collection has been cleared.
-										Will be called with an error if one is raised.</p>
+										<p>callback function that receives error or null no errors occured.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -529,12 +503,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L291">persistence/MongoDbPersistence.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L291">persistence/MongoDbPersistence.ts:291</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Closes this MongoDB persistence disconnecting from the MongoDB server.</p>
+									<p>Closes component and frees used resources.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -542,14 +516,13 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once disconnected from the MongoDB server.
-										Will be called with an error if one is raised.</p>
+										<p>callback function that receives error or null no errors occured.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -586,55 +559,20 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#configure">configure</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L168">persistence/IdentifiableMongoDbPersistence.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L137">persistence/IdentifiableMongoDbPersistence.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Configures this IdentifiableMongoDbPersistence using the given configuration parameters.</p>
+									<p>Configures component by passing configuration parameters.</p>
 								</div>
-								<p><strong>Configuration parameters:</strong></p>
-								<ul>
-									<li><strong>connection(s)</strong><ul>
-											<li>&quot;connection.discovery_key&quot; - the key to use for connection resolving in a discovery service;</li>
-											<li>&quot;connection.protocol&quot; - the connection&#39;s protocol;</li>
-											<li>&quot;connection.uri&quot; - the Mongo URI;</li>
-											<li>&quot;connection.host&quot; - the Mongo host;</li>
-											<li>&quot;connection.port&quot; - the Mongo port;</li>
-											<li>&quot;connection.database&quot; - the Mongo Database;</li>
-										</ul>
-									</li>
-									<li><strong>credential(s)</strong><ul>
-											<li>&quot;credential.username&quot; - the username to use for authentication;</li>
-											<li>&quot;credential.password&quot; - the password;</li>
-											<li>&quot;credential.store_key&quot; - the key to use in the credential store;</li>
-											<li>&quot;credential.access_id&quot; - the access ID to use;</li>
-											<li>&quot;credential.access_key&quot; - the access key to use;</li>
-										</ul>
-									</li>
-									<li><strong>options</strong><ul>
-											<li>&quot;options.max_pool_size&quot; (default is 2);</li>
-											<li>&quot;options.keep_alive&quot; (default is 1);</li>
-											<li>&quot;options.connect_timeout&quot; (default is 5000);</li>
-											<li>&quot;options.auto_reconnect&quot; (default is <code>true</code>);</li>
-											<li>&quot;options.max_page_size&quot; (default is 100);</li>
-											<li>&quot;options.debug&quot; (default is <code>false</code>).</li>
-										</ul>
-									</li>
-									<li>&quot;collection&quot; - the MongoDB collection to work with.</li>
-								</ul>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/config.configparams.html" class="external">ConfigParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>config: <span class="tsd-signature-type">ConfigParams</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the configuration parameters to configure this IdentifiableMongoDbPersistence with.</p>
+										<p>configuration parameters to be set.</p>
 									</div>
 								</li>
 							</ul>
@@ -653,13 +591,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#convertfrompublic">convertFromPublic</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L206">persistence/MongoDbPersistence.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L207">persistence/MongoDbPersistence.ts:207</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Convert the given object from the public format (JSON) to its
-									initial format.</p>
+									<p>Convert object value from public to internal format.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -667,12 +604,12 @@
 								<li>
 									<h5>value: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the object to convert from the public format.</p>
+										<p>an object in public format to convert.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-							<p>the initial object.</p>
+							<p>converted object in internal format.</p>
 						</li>
 					</ul>
 				</section>
@@ -686,7 +623,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L180">persistence/IdentifiableMongoDbPersistence.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L149">persistence/IdentifiableMongoDbPersistence.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -719,12 +656,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#converttopublic">convertToPublic</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L193">persistence/MongoDbPersistence.ts:193</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L195">persistence/MongoDbPersistence.ts:195</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Converts the given object to the public format (JSON).</p>
+									<p>Converts object value from internal to public format.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -732,12 +669,12 @@
 								<li>
 									<h5>value: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the object to convert to the public format.</p>
+										<p>an object in internal format to convert.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-							<p>the object&#39;s public version.</p>
+							<p>converted object in public format.</p>
 						</li>
 					</ul>
 				</section>
@@ -751,38 +688,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L355">persistence/IdentifiableMongoDbPersistence.ts:355</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L316">persistence/IdentifiableMongoDbPersistence.ts:316</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a record of the given item in the database.</p>
+									<p>Creates a data item.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p>[[save]]</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
-									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to create a record of.</p>
+										<p>an item to be created.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the created record
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives created item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -821,33 +749,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L513">persistence/IdentifiableMongoDbPersistence.ts:513</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L471">persistence/IdentifiableMongoDbPersistence.ts:471</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes the items that match the given filter.</p>
+									<p>Deletes data items that match to a given filter.</p>
 								</div>
+								<p>This method shall be called by a public deleteByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the filter to use for determining what items to delete.</p>
+										<p>(optional) a filter JSON object.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the items have been deleted
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -883,33 +812,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L493">persistence/IdentifiableMongoDbPersistence.ts:493</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L449">persistence/IdentifiableMongoDbPersistence.ts:449</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes the item with the given ID.</p>
+									<p>Deleted a data item by it&#39;s unique id.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
-									</div>
 								</li>
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item that is to be deleted.</p>
+										<p>an id of the item to be deleted</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the deleted item
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives deleted item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -948,12 +873,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L530">persistence/IdentifiableMongoDbPersistence.ts:530</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L487">persistence/IdentifiableMongoDbPersistence.ts:487</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Deletes the items with the given IDs.</p>
+									<p>Deletes multiple data items by their unique ids.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -961,20 +886,19 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>ids: <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the ids of the items that are to be deleted.</p>
+										<p>ids of data items to be deleted.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once the items have been deleted
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives error or null for success.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1010,45 +934,46 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L258">persistence/IdentifiableMongoDbPersistence.ts:258</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L223">persistence/IdentifiableMongoDbPersistence.ts:223</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves a list of items in accordance with the given parameters.</p>
+									<p>Gets a list of data items retrieved by a given filter and sorted according to sort parameters.</p>
 								</div>
+								<p>This method shall be called by a public getListByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to use for filtering results.</p>
+										<p>(optional) a filter JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>sort: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to use for sorting results.</p>
+										<p>(optional) sorting JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>select: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to select results by.</p>
+										<p>(optional) projection JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved list of items
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a data list or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1087,12 +1012,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L289">persistence/IdentifiableMongoDbPersistence.ts:289</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L253">persistence/IdentifiableMongoDbPersistence.ts:253</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves the items with the given IDs.</p>
+									<p>Gets a list of data items retrieved by given unique ids.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1100,20 +1025,19 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>ids: <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the ids of the items to retrieve.</p>
+										<p>ids of data items to be retrieved</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved list of items
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a data list or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1152,12 +1076,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L305">persistence/IdentifiableMongoDbPersistence.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L268">persistence/IdentifiableMongoDbPersistence.ts:268</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves an item by its ID.</p>
+									<p>Gets a data item by its unique id.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1165,20 +1089,19 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item to retrieve.</p>
+										<p>an id of data item to be retrieved.</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives data item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1217,33 +1140,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L324">persistence/IdentifiableMongoDbPersistence.ts:324</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L288">persistence/IdentifiableMongoDbPersistence.ts:288</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves a random item from the ones that are stored.</p>
+									<p>Gets a random item from items that match to a given filter.</p>
 								</div>
+								<p>This method shall be called by a public getOneRandom method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the filtering function to filter the result by.</p>
+										<p>(optional) a filter JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the randomly retrieved item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a random item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1282,59 +1206,52 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L201">persistence/IdentifiableMongoDbPersistence.ts:201</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L166">persistence/IdentifiableMongoDbPersistence.ts:166</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Retrieves DataPages in accordance with the given parameters.</p>
+									<p>Gets a page of data items retrieved by a given filter and sorted according to sort parameters.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.datapage.html" class="external">DataPage</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.pagingparams.html" class="external">PagingParams</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
+								<p>This method shall be called by a public getPageByFilter method from child class that
+								receives FilterParams and converts them into a filter function.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5>filter: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to use for filtering results.</p>
+										<p>(optional) a filter JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>paging: <span class="tsd-signature-type">PagingParams</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the paging parameters to use.</p>
+										<p>(optional) paging parameters</p>
 									</div>
 								</li>
 								<li>
 									<h5>sort: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to use for sorting results.</p>
+										<p>(optional) sorting JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>select: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to select results by.</p>
+										<p>(optional) projection JSON object</p>
 									</div>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the function to call with the retrieved pages
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives a data page or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1374,14 +1291,16 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#isopen">isOpen</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L214">persistence/MongoDbPersistence.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L216">persistence/MongoDbPersistence.ts:216</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if the component is opened.</p>
+								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
-							<p>whether or not this persistence is currently open and connected to a
-							MongoDB server.</p>
+							<p>true if the component has been opened and false otherwise.</p>
 						</li>
 					</ul>
 				</section>
@@ -1396,12 +1315,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#open">open</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L249">persistence/MongoDbPersistence.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L250">persistence/MongoDbPersistence.ts:250</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Opens this MongoDB persistence by resolving and establishing a connection to the MongoDB server.</p>
+									<p>Opens the component.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1409,14 +1328,13 @@
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
+										<p>(optional) transaction id to trace execution through call chain.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call once a connection to the MongoDB server
-										has been established. Will be called with an error if one is raised.</p>
+										<p>callback function that receives error or null no errors occured.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1452,33 +1370,30 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L383">persistence/IdentifiableMongoDbPersistence.ts:383</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L344">persistence/IdentifiableMongoDbPersistence.ts:344</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Upserts the given item in the database.</p>
+									<p>Sets a data item. If the data item exists it updates it,
+									otherwise it create a new data item.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
-									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to upsert.</p>
+										<p>a item to be set.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the item that was upserted
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1518,33 +1433,20 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="persistence.mongodbpersistence.html">MongoDbPersistence</a>.<a href="persistence.mongodbpersistence.html#setreferences">setReferences</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/MongoDbPersistence.ts#L137">persistence/MongoDbPersistence.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L184">persistence/MongoDbPersistence.ts:184</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets references to this MongoDbPersistence&#39;s logger and its connection resolver.</p>
+									<p>Sets references to dependent components.</p>
 								</div>
-								<p><strong>References:</strong></p>
-								<ul>
-									<li>logger: <code>&quot;*:logger:*:*:1.0&quot;</code>;</li>
-									<li>discovery: <code>&quot;*:discovery:*:*:1.0&quot;</code> (for the connection resolver);</li>
-									<li>credential store: <code>&quot;*:credential-store:*:*:1.0&quot;</code> (for the connection resolver&#39;s credential resolver).</li>
-								</ul>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/interfaces/refer.ireferences.html" class="external">IReferences</a> (in the PipServices &quot;Commons&quot; package)</p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>references: <span class="tsd-signature-type">IReferences</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>an IReferences object, containing references to a logger, a discovery service
-											(for the connection resolver), and a credential store (for the connection resolver&#39;s
-										credential resolver).</p>
+										<p>references to locate the component dependencies.</p>
 									</div>
 								</li>
 							</ul>
@@ -1562,33 +1464,29 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L422">persistence/IdentifiableMongoDbPersistence.ts:422</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L382">persistence/IdentifiableMongoDbPersistence.ts:382</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Updates the record of the given item.</p>
+									<p>Updates a data item.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
-									</div>
 								</li>
 								<li>
 									<h5>item: <span class="tsd-signature-type">T</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the item to update.</p>
+										<p>an item to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the updated item
-										(or with an error, if one is raised).</p>
+										<p>(optional) callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
@@ -1627,44 +1525,35 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/2f9d82a/src/persistence/IdentifiableMongoDbPersistence.ts#L456">persistence/IdentifiableMongoDbPersistence.ts:456</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/IdentifiableMongoDbPersistence.ts#L413">persistence/IdentifiableMongoDbPersistence.ts:413</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Performes a partial update for the record with the given ID.</p>
+									<p>Updates only few selected fields in a data item.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://rawgit.com/pip-services-node/pip-services-commons-node/master/doc/api/classes/data.anyvaluemap.html" class="external">AnyValueMap</a></p>
-									</dd>
-								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>correlationId: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>unique business transaction id to trace calls across components.</p>
-									</div>
 								</li>
 								<li>
 									<h5>id: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the id of the item that is to be updated (partially).</p>
+										<p>an id of data item to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5>data: <span class="tsd-signature-type">AnyValueMap</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>the map of items to update in the record.</p>
+										<p>a map with fields to be updated.</p>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>(optional) the function to call with the updated item
-										(or with an error, if one is raised).</p>
+										<p>callback function that receives updated item or error.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">

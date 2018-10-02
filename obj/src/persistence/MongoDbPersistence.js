@@ -12,70 +12,73 @@ const MongoDbConnectionResolver_1 = require("../connect/MongoDbConnectionResolve
  * This is the most basic persistence component that is only
  * able to store data items of any type. Specific CRUD operations
  * over the data items must be implemented in child classes by
- * accessing this._collection or this._model properties.
+ * accessing <code>this._collection</code> or <code>this._model</code> properties.
  *
  * ### Configuration parameters ###
  *
  * collection:                  (optional) MongoDB collection name
+ *
  * connection(s):
- *   discovery_key:             (optional) a key to retrieve the connection from [[IDiscovery]]
- *   host:                      host name or IP address
- *   port:                      port number (default: 27017)
- *   uri:                       resource URI or connection string with all parameters in it
+ *   - discovery_key:             (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
+ *   - host:                      host name or IP address
+ *   - port:                      port number (default: 27017)
+ *   - uri:                       resource URI or connection string with all parameters in it
+ *
  * credential(s):
- *   store_key:                 (optional) a key to retrieve the credentials from [[ICredentialStore]]
- *   username:                  (optional) user name
- *   password:                  (optional) user password
+ *   - store_key:                 (optional) a key to retrieve the credentials from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]]
+ *   - username:                  (optional) user name
+ *   - password:                  (optional) user password
+ *
  * options:
- *   max_pool_size:             (optional) maximum connection pool size (default: 2)
- *   keep_alive:                (optional) enable connection keep alive (default: true)
- *   connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
- *   auto_reconnect:            (optional) enable auto reconnection (default: true)
- *   max_page_size:             (optional) maximum page size (default: 100)
- *   debug:                     (optional) enable debug output (default: false).
+ *   - max_pool_size:             (optional) maximum connection pool size (default: 2)
+ *   - keep_alive:                (optional) enable connection keep alive (default: true)
+ *   - connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
+ *   - auto_reconnect:            (optional) enable auto reconnection (default: true)
+ *   - max_page_size:             (optional) maximum page size (default: 100)
+ *   - debug:                     (optional) enable debug output (default: false).
  *
  * ### References ###
  *
- * - *:logger:*:*:1.0           (optional) ILogger components to pass log messages
- * - *:discovery:*:*:1.0        (optional) IDiscovery services
- * - *:credential-store:*:*:1.0 (optional) Credential stores to resolve credentials
+ * - <code>*:logger:*:*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
+ * - <code>*:discovery:*:*:1.0</code>        (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
+ * - <code>*:credential-store:*:*:1.0</code> (optional) Credential stores to resolve credentials
  *
  * ### Example ###
  *
- * class MyMongoDbPersistence extends MongoDbPersistence<MyData> {
+ *     class MyMongoDbPersistence extends MongoDbPersistence<MyData> {
  *
- *   public constructor() {
- *       base("mydata", new MyDataMongoDbSchema());
- *   }
+ *       public constructor() {
+ *           base("mydata", new MyDataMongoDbSchema());
+ *     }
  *
- *   public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
- *       let criteria = { name: name };
- *       this._model.findOne(criteria, callback);
- *   });
- *
- *   public set(correlatonId: string, item: MyData, callback: (err) => void): void {
- *       let criteria = { name: item.name };
- *       let options = { upsert: true, new: true };
- *       this._model.findOneAndUpdate(criteria, item, options, callback);
- *   }
- *
- * }
- *
- * let persistence = new MyMongoDbPersistence();
- * persistence.configure(ConfigParams.fromTuples(
- *     "host", "localhost",
- *     "port", 27017
- * ));
- *
- * persitence.open("123", (err) => {
- *     ...
- * });
- *
- * persistence.set("123", { name: "ABC" }, (err) => {
- *     persistence.getByName("123", "ABC", (err, item) => {
- *         console.log(item);                   // Result: { name: "ABC" }
+ *     public getByName(correlationId: string, name: string, callback: (err, item) => void): void {
+ *         let criteria = { name: name };
+ *         this._model.findOne(criteria, callback);
  *     });
- * });
+ *
+ *     public set(correlatonId: string, item: MyData, callback: (err) => void): void {
+ *         let criteria = { name: item.name };
+ *         let options = { upsert: true, new: true };
+ *         this._model.findOneAndUpdate(criteria, item, options, callback);
+ *     }
+ *
+ *     }
+ *
+ *     let persistence = new MyMongoDbPersistence();
+ *     persistence.configure(ConfigParams.fromTuples(
+ *         "host", "localhost",
+ *         "port", 27017
+ *     ));
+ *
+ *     persitence.open("123", (err) => {
+ *          ...
+ *     });
+ *
+ *     persistence.set("123", { name: "ABC" }, (err) => {
+ *         persistence.getByName("123", "ABC", (err, item) => {
+ *             console.log(item);                   // Result: { name: "ABC" }
+ *         });
+ *     });
  */
 class MongoDbPersistence {
     /**

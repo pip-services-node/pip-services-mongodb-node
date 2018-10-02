@@ -13,20 +13,21 @@ import { CredentialResolver } from 'pip-services-components-node';
  *  ### Configuration parameters ###
  *
  * connection(s):
- *   discovery_key:               (optional) a key to retrieve the connection from IDiscovery
- *   host:                        host name or IP address
- *   port:                        port number (default: 27017)
- *   database:                    database name
- *   uri:                         resource URI or connection string with all parameters in it
+ *   - discovery_key:               (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
+ *   - host:                        host name or IP address
+ *   - port:                        port number (default: 27017)
+ *   - database:                    database name
+ *   - uri:                         resource URI or connection string with all parameters in it
+ *
  * credential(s):
- *   store_key:                   (optional) a key to retrieve the credentials from ICredentialStore
- *   username:                    user name
- *   password:                    user password
+ *   - store_key:                   (optional) a key to retrieve the credentials from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]]
+ *   - username:                    user name
+ *   - password:                    user password
  *
  * ### References ###
  *
- * - *:discovery:*:*:1.0          (optional) IDiscovery services
- * - *:credential-store:*:*:1.0   (optional) Credential stores to resolve credentials
+ * - <code>*:discovery:*:*:1.0</code>             (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
+ * - <code>*:credential-store:*:*:1.0</code>      (optional) Credential stores to resolve credentials
  */
 export declare class MongoDbConnectionResolver implements IReferenceable, IConfigurable {
     /**
