@@ -78,34 +78,36 @@
 						over the data items must be implemented in child classes by
 					accessing <code>this._collection</code> or <code>this._model</code> properties.</p>
 					<h3 id="configuration-parameters">Configuration parameters</h3>
-					<p>collection:                  (optional) MongoDB collection name</p>
-					<p>connection(s):</p>
 					<ul>
-						<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
-						<li>host:                      host name or IP address</li>
-						<li>port:                      port number (default: 27017)</li>
-						<li>uri:                       resource URI or connection string with all parameters in it</li>
-					</ul>
-					<p>credential(s):</p>
-					<ul>
-						<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
-						<li>username:                  (optional) user name</li>
-						<li>password:                  (optional) user password</li>
-					</ul>
-					<p>options:</p>
-					<ul>
-						<li>max_pool_size:             (optional) maximum connection pool size (default: 2)</li>
-						<li>keep_alive:                (optional) enable connection keep alive (default: true)</li>
-						<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</li>
-						<li>auto_reconnect:            (optional) enable auto reconnection (default: true)</li>
-						<li>max_page_size:             (optional) maximum page size (default: 100)</li>
-						<li>debug:                     (optional) enable debug output (default: false).</li>
+						<li>collection:                  (optional) MongoDB collection name</li>
+						<li>connection(s):<ul>
+								<li>discovery_key:             (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
+								<li>host:                      host name or IP address</li>
+								<li>port:                      port number (default: 27017)</li>
+								<li>uri:                       resource URI or connection string with all parameters in it</li>
+							</ul>
+						</li>
+						<li>credential(s):<ul>
+								<li>store_key:                 (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
+								<li>username:                  (optional) user name</li>
+								<li>password:                  (optional) user password</li>
+							</ul>
+						</li>
+						<li>options:<ul>
+								<li>max_pool_size:             (optional) maximum connection pool size (default: 2)</li>
+								<li>keep_alive:                (optional) enable connection keep alive (default: true)</li>
+								<li>connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)</li>
+								<li>auto_reconnect:            (optional) enable auto reconnection (default: true)</li>
+								<li>max_page_size:             (optional) maximum page size (default: 100)</li>
+								<li>debug:                     (optional) enable debug output (default: false).</li>
+							</ul>
+						</li>
 					</ul>
 					<h3 id="references">References</h3>
 					<ul>
-						<li><code><em>:logger:</em>:*:1.0</code>           (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages</li>
-						<li><code><em>:discovery:</em>:*:1.0</code>        (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
-						<li><code><em>:credential-store:</em>:*:1.0</code> (optional) Credential stores to resolve credentials</li>
+						<li><code>*:logger:*:*:1.0</code>           (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html" class="external">ILogger</a> components to pass log messages</li>
+						<li><code>*:discovery:*:*:1.0</code>        (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
+						<li><code>*:credential-store:*:*:1.0</code> (optional) Credential stores to resolve credentials</li>
 					</ul>
 					<h3 id="example">Example</h3>
 					<pre><code><span class="hljs-keyword">class</span> MyMongoDbPersistence <span class="hljs-keyword">extends</span> MongoDbPersistence&lt;MyData&gt; {
@@ -218,7 +220,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L140">persistence/MongoDbPersistence.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L137">persistence/MongoDbPersistence.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -258,7 +260,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_collection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L132">persistence/MongoDbPersistence.ts:132</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L129">persistence/MongoDbPersistence.ts:129</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -273,7 +275,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L124">persistence/MongoDbPersistence.ts:124</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L121">persistence/MongoDbPersistence.ts:121</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -288,7 +290,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <a href="connect.mongodbconnectionresolver.html" class="tsd-signature-type">MongoDbConnectionResolver</a><span class="tsd-signature-symbol"> =&nbsp;new MongoDbConnectionResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L115">persistence/MongoDbPersistence.ts:115</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L112">persistence/MongoDbPersistence.ts:112</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -303,7 +305,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_database<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L128">persistence/MongoDbPersistence.ts:128</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L125">persistence/MongoDbPersistence.ts:125</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -318,7 +320,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CompositeLogger</span><span class="tsd-signature-symbol"> =&nbsp;new CompositeLogger()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L111">persistence/MongoDbPersistence.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L108">persistence/MongoDbPersistence.ts:108</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -333,7 +335,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_model<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L136">persistence/MongoDbPersistence.ts:136</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L133">persistence/MongoDbPersistence.ts:133</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -348,7 +350,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConfigParams</span><span class="tsd-signature-symbol"> =&nbsp;new ConfigParams()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L119">persistence/MongoDbPersistence.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L116">persistence/MongoDbPersistence.ts:116</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -363,7 +365,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 					<div class="tsd-signature tsd-kind-icon">_schema<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Schema</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L140">persistence/MongoDbPersistence.ts:140</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L137">persistence/MongoDbPersistence.ts:137</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -385,7 +387,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L308">persistence/MongoDbPersistence.ts:308</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L305">persistence/MongoDbPersistence.ts:305</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -440,7 +442,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L291">persistence/MongoDbPersistence.ts:291</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L288">persistence/MongoDbPersistence.ts:288</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -495,7 +497,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L164">persistence/MongoDbPersistence.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L161">persistence/MongoDbPersistence.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -526,7 +528,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L207">persistence/MongoDbPersistence.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L204">persistence/MongoDbPersistence.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -558,7 +560,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L195">persistence/MongoDbPersistence.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L192">persistence/MongoDbPersistence.ts:192</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -590,7 +592,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L216">persistence/MongoDbPersistence.ts:216</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L213">persistence/MongoDbPersistence.ts:213</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -613,7 +615,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L250">persistence/MongoDbPersistence.ts:250</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L247">persistence/MongoDbPersistence.ts:247</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -668,7 +670,7 @@ persistence.set(<span class="hljs-string">"123"</span>, { name: <span class="hlj
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/persistence/MongoDbPersistence.ts#L184">persistence/MongoDbPersistence.ts:184</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/persistence/MongoDbPersistence.ts#L181">persistence/MongoDbPersistence.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

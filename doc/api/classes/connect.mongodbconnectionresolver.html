@@ -75,24 +75,26 @@
 					</div>
 					<p>It is able to process multiple connections to MongoDB cluster nodes.</p>
 					<h3 id="configuration-parameters">Configuration parameters</h3>
-					<p>connection(s):</p>
 					<ul>
-						<li>discovery_key:               (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
-						<li>host:                        host name or IP address</li>
-						<li>port:                        port number (default: 27017)</li>
-						<li>database:                    database name</li>
-						<li>uri:                         resource URI or connection string with all parameters in it</li>
-					</ul>
-					<p>credential(s):</p>
-					<ul>
-						<li>store_key:                   (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
-						<li>username:                    user name</li>
-						<li>password:                    user password</li>
+						<li>connection(s):<ul>
+								<li>discovery_key:               (optional) a key to retrieve the connection from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a></li>
+								<li>host:                        host name or IP address</li>
+								<li>port:                        port number (default: 27017)</li>
+								<li>database:                    database name</li>
+								<li>uri:                         resource URI or connection string with all parameters in it</li>
+							</ul>
+						</li>
+						<li>credential(s):<ul>
+								<li>store_key:                   (optional) a key to retrieve the credentials from <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html" class="external">ICredentialStore</a></li>
+								<li>username:                    user name</li>
+								<li>password:                    user password</li>
+							</ul>
+						</li>
 					</ul>
 					<h3 id="references">References</h3>
 					<ul>
-						<li><code><em>:discovery:</em>:*:1.0</code>             (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
-						<li><code><em>:credential-store:</em>:*:1.0</code>      (optional) Credential stores to resolve credentials</li>
+						<li><code>*:discovery:*:*:1.0</code>             (optional) <a href="https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html" class="external">IDiscovery</a> services</li>
+						<li><code>*:credential-store:*:*:1.0</code>      (optional) Credential stores to resolve credentials</li>
 					</ul>
 				</div>
 			</section>
@@ -141,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">_connection<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ConnectionResolver</span><span class="tsd-signature-symbol"> =&nbsp;new ConnectionResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/connect/MongoDbConnectionResolver.ts#L44">connect/MongoDbConnectionResolver.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/connect/MongoDbConnectionResolver.ts#L43">connect/MongoDbConnectionResolver.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -156,7 +158,7 @@
 					<div class="tsd-signature tsd-kind-icon">_credential<wbr>Resolver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CredentialResolver</span><span class="tsd-signature-symbol"> =&nbsp;new CredentialResolver()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/connect/MongoDbConnectionResolver.ts#L48">connect/MongoDbConnectionResolver.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/connect/MongoDbConnectionResolver.ts#L47">connect/MongoDbConnectionResolver.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -178,7 +180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/connect/MongoDbConnectionResolver.ts#L55">connect/MongoDbConnectionResolver.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/connect/MongoDbConnectionResolver.ts#L54">connect/MongoDbConnectionResolver.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -209,7 +211,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/connect/MongoDbConnectionResolver.ts#L174">connect/MongoDbConnectionResolver.ts:174</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/connect/MongoDbConnectionResolver.ts#L173">connect/MongoDbConnectionResolver.ts:173</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/93264c8/src/connect/MongoDbConnectionResolver.ts#L65">connect/MongoDbConnectionResolver.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/pip-services-node/pip-services-mongodb-node/blob/db89deb/src/connect/MongoDbConnectionResolver.ts#L64">connect/MongoDbConnectionResolver.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

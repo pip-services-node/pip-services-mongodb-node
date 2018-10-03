@@ -24,20 +24,17 @@ import { MongoDbConnectionResolver } from '../connect/MongoDbConnectionResolver'
  * 
  * ### Configuration parameters ###
  * 
- * collection:                  (optional) MongoDB collection name
- * 
- * connection(s):    
+ * - collection:                  (optional) MongoDB collection name
+ * - connection(s):    
  *   - discovery_key:             (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
  *   - host:                      host name or IP address
  *   - port:                      port number (default: 27017)
  *   - uri:                       resource URI or connection string with all parameters in it
- * 
- * credential(s):    
+ * - credential(s):    
  *   - store_key:                 (optional) a key to retrieve the credentials from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]]
  *   - username:                  (optional) user name
  *   - password:                  (optional) user password
- * 
- * options:
+ * - options:
  *   - max_pool_size:             (optional) maximum connection pool size (default: 2)
  *   - keep_alive:                (optional) enable connection keep alive (default: true)
  *   - connect_timeout:           (optional) connection timeout in milliseconds (default: 5 sec)
@@ -47,9 +44,9 @@ import { MongoDbConnectionResolver } from '../connect/MongoDbConnectionResolver'
  * 
  * ### References ###
  * 
- * - <code>*:logger:*:*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
- * - <code>*:discovery:*:*:1.0</code>        (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
- * - <code>*:credential-store:*:*:1.0</code> (optional) Credential stores to resolve credentials
+ * - <code>\*:logger:\*:\*:1.0</code>           (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/log.ilogger.html ILogger]] components to pass log messages
+ * - <code>\*:discovery:\*:\*:1.0</code>        (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
+ * - <code>\*:credential-store:\*:\*:1.0</code> (optional) Credential stores to resolve credentials
  * 
  * ### Example ###
  * 

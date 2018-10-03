@@ -15,22 +15,21 @@ const pip_services_components_node_2 = require("pip-services-components-node");
  *
  *  ### Configuration parameters ###
  *
- * connection(s):
+ * - connection(s):
  *   - discovery_key:               (optional) a key to retrieve the connection from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]]
  *   - host:                        host name or IP address
  *   - port:                        port number (default: 27017)
  *   - database:                    database name
  *   - uri:                         resource URI or connection string with all parameters in it
- *
- * credential(s):
+ * - credential(s):
  *   - store_key:                   (optional) a key to retrieve the credentials from [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/auth.icredentialstore.html ICredentialStore]]
  *   - username:                    user name
  *   - password:                    user password
  *
  * ### References ###
  *
- * - <code>*:discovery:*:*:1.0</code>             (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
- * - <code>*:credential-store:*:*:1.0</code>      (optional) Credential stores to resolve credentials
+ * - <code>\*:discovery:\*:\*:1.0</code>             (optional) [[https://rawgit.com/pip-services-node/pip-services-components-node/master/doc/api/interfaces/connect.idiscovery.html IDiscovery]] services
+ * - <code>\*:credential-store:\*:\*:1.0</code>      (optional) Credential stores to resolve credentials
  */
 class MongoDbConnectionResolver {
     constructor() {
